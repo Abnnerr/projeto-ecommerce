@@ -1,6 +1,6 @@
 const BoardLayout = () => {
     return (
-        <div className="bg-gray-600  text-lg font-mono bg-amber-400">
+        <div className="bg-gray-600  text-lg font-mono">
 
         </div>
     );

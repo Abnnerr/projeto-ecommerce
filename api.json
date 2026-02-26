@@ -29,5 +29,11 @@
                 "Disponível nos tamanhos 36-44"
             ]
         }
+    ],
+    "login": [
+        {
+            "email": "israel@email.com",
+            "senha": "123456"
+        }
     ]
 }

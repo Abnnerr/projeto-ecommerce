@@ -9,6 +9,7 @@ export default function Login() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [user, setUser] = useState()
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,10 +21,8 @@ export default function Login() {
 
         try {
             setLoading(true);
-            await AXIOS.post("/login", {
-                email: form.email,
-                password: form.password,
-            });
+           const request = await AXIOS.get("/login");
+           setUser(request.data)
         } catch (err) {
             setError(
                 err.response?.data?.message || "Email ou senha inválidos."

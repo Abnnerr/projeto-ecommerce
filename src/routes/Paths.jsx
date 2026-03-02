@@ -13,6 +13,7 @@ const Paths = () => {
             <Routes>
                 <Route path="/" element={<PageLayout />}>
                     <Route index element={<Home />} />
+                    <Route path="/product" element={<PageProduct />} />
                 </Route>
 
                 
@@ -20,7 +21,6 @@ const Paths = () => {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route path="/product" element={<PageProduct />} />
                 </Route>
                 <Route path="/dashboard" element={''}>
                 </Route>

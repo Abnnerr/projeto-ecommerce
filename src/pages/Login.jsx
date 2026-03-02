@@ -1,7 +1,11 @@
 import { useState } from "react";
 import {AXIOS} from "../services"
+import { useUser } from "../contexts/UsuarioProvider";
 
 export default function Login() {
+
+    const {login} = useUser()
+
     const [form, setForm] = useState({
         email: "",
         password: "",
@@ -20,10 +24,8 @@ export default function Login() {
 
         try {
             setLoading(true);
-            await AXIOS.post("/login", {
-                email: form.email,
-                password: form.password,
-            });
+            await login(form.email, form.password)
+            
         } catch (err) {
             setError(
                 err.response?.data?.message || "Email ou senha inválidos."
@@ -34,7 +36,7 @@ export default function Login() {
     }
 
     return (
-        <div className="bg-(--bg) min-h-screen  flex flex-col">
+        <div className=" min-h-screen  flex flex-col">
             <main className="flex-1 flex items-center justify-center px-4">
                 <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-6 sm:p-8">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">

@@ -65,6 +65,7 @@ export default function PageProduct() {
             setFretes(mockFretes);
         } catch (error) {
             setFretes([]);
+            return error
         } finally {
             setLoadingFrete(false);
         }

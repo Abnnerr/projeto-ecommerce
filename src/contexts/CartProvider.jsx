@@ -1,46 +1,101 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { AXIOS } from "../services";
 
-// Criando o contexto do carrinho
 const CartContext = createContext();
 
-// Provider do carrinho
 export function CartProvider({ children }) {
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState(() => {
+        const saved = localStorage.getItem("cart");
+        return saved ? JSON.parse(saved) : [];
+    });
 
-    // Adicionar produto ao carrinho
-    const addToCart = (produto, quantidade = 1) => {
-        const existing = cart.find(item => item.id === produto.id);
-        if (existing) {
-            setCart(cart.map(item =>
-                item.id === produto.id
-                    ? { ...item, quantidade: item.quantidade + quantidade }
-                    : item
-            ));
-        } else {
-            setCart([...cart, { ...produto, quantidade }]);
+    const [loading, setLoading] = useState(true);
+
+    // 🔹 Buscar carrinho do banco ao iniciar (se existir)
+    useEffect(() => {
+        const fetchCartFromBackend = async () => {
+            try {
+                const { data } = await AXIOS.get("/api/cart");
+
+                if (data && Array.isArray(data)) {
+                    setCart(data);
+                    localStorage.setItem("cart", JSON.stringify(data));
+                }
+            } catch (error) {
+                console.warn("Backend offline. Usando carrinho local.");
+                return error
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCartFromBackend();
+    }, []);
+
+    // 🔹 Sempre salvar no localStorage quando mudar
+    useEffect(() => {
+        if (!loading) {
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+    }, [cart, loading]);
+
+    // 🔹 Função para sincronizar com backend
+    const syncWithBackend = async (updatedCart) => {
+        try {
+            await AXIOS.post("/api/cart/sync", updatedCart);
+        } catch (error) {
+        
+            console.warn("Não foi possível sincronizar com o backend.");
+            return error
         }
     };
 
-    // Remover produto do carrinho
-    const removeFromCart = (produtoId) => {
-        setCart(cart.filter(item => item.id !== produtoId));
+    // 🔹 Adicionar produto
+    const addToCart = (produto, quantidade = 1) => {
+        let updatedCart;
+
+        const existing = cart.find(item => item.id === produto.id);
+
+        if (existing) {
+            updatedCart = cart.map(item =>
+                item.id === produto.id
+                    ? { ...item, quantidade: item.quantidade + quantidade }
+                    : item
+            );
+        } else {
+            updatedCart = [...cart, { ...produto, quantidade }];
+        }
+
+        setCart(updatedCart);
+        syncWithBackend(updatedCart);
     };
 
-    // Atualizar quantidade de um produto
+    // 🔹 Remover produto
+    const removeFromCart = (produtoId) => {
+        const updatedCart = cart.filter(item => item.id !== produtoId);
+        setCart(updatedCart);
+        syncWithBackend(updatedCart);
+    };
+
+    // 🔹 Atualizar quantidade
     const updateQuantity = (produtoId, novaQuantidade) => {
-        setCart(cart.map(item =>
+        const updatedCart = cart.map(item =>
             item.id === produtoId
                 ? { ...item, quantidade: novaQuantidade }
                 : item
-        ));
+        );
+
+        setCart(updatedCart);
+        syncWithBackend(updatedCart);
     };
 
-    // Limpar carrinho
+    // 🔹 Limpar carrinho
     const clearCart = () => {
         setCart([]);
+        syncWithBackend([]);
     };
 
-    // Total do carrinho
+    // 🔹 Calcular total
     const total = cart.reduce((acc, item) => {
         const valor = Number(item.valor || 0);
         const desconto = Number(item.desconto || 0);
@@ -56,11 +111,13 @@ export function CartProvider({ children }) {
                 removeFromCart,
                 updateQuantity,
                 clearCart,
-                total
+                total,
+                loading
             }}
         >
             {children}
         </CartContext.Provider>
     );
 }
+
 export const useCart = () => useContext(CartContext);

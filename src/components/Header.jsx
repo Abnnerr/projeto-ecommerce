@@ -1,6 +1,15 @@
 import { FaSearch, FaUser, FaShoppingCart, FaWhatsapp } from "react-icons/fa";
+import { useCart } from "../contexts/CartProvider";
+import { useMemo } from "react";
 
 export default function Header() {
+    const { cart} = useCart();
+
+    // 🔹 Total de itens (soma das quantidades)
+    const totalItems = useMemo(() => {
+        return cart.reduce((acc, item) => acc + item.quantidade, 0);
+    }, [cart]);
+
     return (
         <header className="
         bg-[#0D0D0D]
@@ -79,9 +88,9 @@ export default function Header() {
                                 Conta
                             </span>
 
-                            <strong className="text-sm font-medium text-[#EAEAEA]">
+                            <a href="/login" className="text-sm font-medium text-[#EAEAEA]">
                                 Entrar
-                            </strong>
+                            </a>
 
                         </div>
 
@@ -114,7 +123,7 @@ export default function Header() {
                         px-1.5 py-[2px]
                         rounded-full
                         ">
-                            0
+                            {totalItems}
                         </span>
                     </div>
                 </div>

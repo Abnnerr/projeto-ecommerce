@@ -5,6 +5,8 @@ import Paths from "./routes/Paths";
 function App() {
   return (
     <HeadProvider>
+     <Categoria/>
+      <Depoimentos />
       <Paths />
     </HeadProvider>
   );

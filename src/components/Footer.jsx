@@ -1,92 +1,157 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { AXIOS } from "../services";
 
 const Footer = () => {
     const [showMessage, setShowMessage] = useState(false);
+    const [email, setEmail] = useState('')
 
-    const handleSubmit = (e) => {
+    async function handleSubmit(e) {
         e.preventDefault();
-        setShowMessage(true);
 
-        setTimeout(() => {
-            setShowMessage(false);
-        }, 3000);
+        try {
+            setShowMessage(true);
+            let request = await AXIOS.post('/', email)
+            console.log(request.data);
+
+        } catch (error) {
+            console.log(error.message);
+        }
+        finally {
+            setTimeout(() => {
+                setShowMessage(false);
+            }, 3000);
+        }
+
+
+
+
+
     };
 
     return (
-        <footer className="relative">
+        <footer className="border-t border-[#2A2A2A] bg-[#181818] text-[#B3B3B3]">
 
-            {/* Toast */}
-            {showMessage && (
-                <div className="fixed top-6 right-6 bg-white/90 backdrop-blur-lg text-gray-800 px-6 py-4 rounded-2xl shadow-2xl border border-gray-200 flex items-center gap-4 animate-[fadeIn_.4s_ease]">
-                    <div className="w-2 h-10 bg-gradient-to-b from-purple-500 to-indigo-600 rounded-full"></div>
-                    <p className="text-sm font-semibold">
-                        🎉 Email cadastrado com sucesso!
-                    </p>
-                </div>
-            )}
+            <AnimatePresence>
+                {showMessage && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        className="
+                        fixed top-6 right-6 z-50
+                        bg-[#1E1E1E]
+                        border border-[#2A2A2A]
+                        text-[#EAEAEA]
+                        px-5 py-3
+                        rounded-lg
+                        shadow-lg
+                        text-sm
+                        "
+                    >
+                        Email cadastrado com sucesso ✓
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
-            {/* Parte Principal */}
-            <div className="bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] text-white">
+            <div className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-10">
 
-                <div className="max-w-6xl mx-auto px-6 py-14 grid md:grid-cols-2 gap-12">
+                {/* Menu */}
+                <div className="space-y-4">
 
-                    {/* Menu */}
-                    <div className="space-y-4">
-                        <h2 className="text-xl font-bold tracking-wide border-b border-white/20 pb-2 w-fit">
-                            Menu
-                        </h2>
+                    <h2 className="text-sm uppercase tracking-widest text-[#808080]">
+                        Navegação
+                    </h2>
 
-                        <ul className="space-y-3 text-gray-300">
-                            {["Home", "Produtos", "Contato"].map((item) => (
-                                <li
-                                    key={item}
-                                    className="hover:text-white hover:translate-x-1 transition-all duration-300 cursor-pointer"
-                                >
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Newsletter */}
-                    <div className="space-y-4 bg-white/5 backdrop-blur-xl p-6 rounded-2xl  ">
-                        <h2 className="text-xl font-bold tracking-wide">
-                            Receba nossas novidades 
-                        </h2>
-
-                        <p className="text-gray-300 text-sm">
-                            Cadastre seu email e fique por dentro das promoções exclusivas.
-                        </p>
-
-                        <form
-                            onSubmit={handleSubmit}
-                            className="flex flex-col sm:flex-row gap-3 mt-4"
-                        >
-                            <input
-                                type="email"
-                                placeholder="Seu melhor email"
-                                className="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/40 transition text-white placeholder-gray-400"
-                                required
-                            />
-
-                            <button
-                                type="submit"
-                                className="px-6 py-3 rounded-xl font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 shadow-lg hover:shadow-purple-500/40 transition-all duration-300"
+                    <ul className="space-y-2">
+                        {["Home", "Produtos", "Contato"].map((item) => (
+                            <li
+                                key={item}
+                                className="
+                                text-[#B3B3B3]
+                                hover:text-[#EAEAEA]
+                                transition-colors
+                                duration-200
+                                cursor-pointer
+                                "
                             >
-                                Inscrever
-                            </button>
-                        </form>
-                    </div>
+                                {item}
+                            </li>
+                        ))}
+                    </ul>
 
                 </div>
 
-                {/* Linha divisória */}
-                <div className="border-t border-white/10"></div>
+                {/* Newsletter */}
+                <div className="space-y-4">
 
-                {/* Copyright */}
-                <div className="text-center py-6 text-sm text-gray-400">
-                    © 2026 <span className="font-semibold text-white">Ecommerce 3DTech</span>.
-                    Todos os direitos reservados.
+                    <h2 className="text-sm uppercase tracking-widest text-[#808080]">
+                        Newsletter
+                    </h2>
+
+                    <p className="text-sm text-[#808080]">
+                        Receba atualizações e novidades do sistema.
+                    </p>
+
+                    <form
+                        onSubmit={handleSubmit}
+                        className="flex gap-3"
+                    >
+
+                        <input
+                            onChange={(e) => setEmail(e.target.value)}
+                            type="email"
+                            placeholder="seu@email.com"
+                            className="
+                            flex-1
+                            px-4 py-2.5
+                            bg-[#1E1E1E]
+                            border border-[#2A2A2A]
+                            rounded-lg
+                            outline-none
+                            focus:border-[#3B82F6]
+                            focus:text-[#EAEAEA]
+                            text-sm
+                            transition
+                            "
+                            required
+                        />
+
+                        <button
+                            type="submit"
+                            className="
+                            px-4 py-2.5
+                            bg-[#3B82F6]
+                            text-white
+                            rounded-lg
+                            text-sm
+                            font-medium
+                            hover:bg-[#2563EB]
+                            transition
+                            "
+                        >
+                            Inscrever
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            {/* Bottom */}
+            <div className="border-t border-[#2A2A2A]">
+
+                <div className="max-w-6xl mx-auto px-6 py-6 text-xs text-[#808080] flex justify-between">
+
+                    <span className="text-[#808080]">
+                        © 2026 <span className="text-[#EAEAEA]">Ecommerce 3DTech</span>
+                    </span>
+
+                    <span className="tracking-wide text-[#5A5A5A]">
+                        v1.0.0
+                    </span>
+
                 </div>
             </div>
         </footer>

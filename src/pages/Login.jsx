@@ -1,14 +1,20 @@
 import { useState } from "react";
-import {AXIOS} from "../services"
+import { useUser } from "../contexts/UsuarioProvider";
+import { useNavigate } from "react-router";
 
 export default function Login() {
+
+    const { login } = useUser()
+    const navigate = useNavigate()
+
     const [form, setForm] = useState({
         email: "",
-        password: "",
+        senha: "",
     });
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    // const [user, setUser] = useState()
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,13 +26,13 @@ export default function Login() {
 
         try {
             setLoading(true);
-            await AXIOS.post("/login", {
-                email: form.email,
-                password: form.password,
-            });
+            await login(form.email, form.senha)
+            navigate('/')
         } catch (err) {
             setError(
-                err.response?.data?.message || "Email ou senha inválidos."
+                err.response?.data?.message ||
+                err.message ||
+                "Email ou senha inválidos."
             );
         } finally {
             setLoading(false);
@@ -34,7 +40,7 @@ export default function Login() {
     }
 
     return (
-        <div className="bg-(--bg) min-h-screen  flex flex-col">
+        <div className=" min-h-screen  flex flex-col">
             <main className="flex-1 flex items-center justify-center px-4">
                 <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-6 sm:p-8">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
@@ -60,10 +66,10 @@ export default function Login() {
                         <div>
                             <input
                                 type="password"
-                                name="password"
+                                name="senha"
                                 placeholder="Senha"
                                 required
-                                value={form.password}
+                                value={form.senha}
                                 onChange={handleChange}
                                 className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
                             />

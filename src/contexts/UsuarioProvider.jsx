@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AXIOS } from "../services";
+import { useNavigate } from "react-router";
 
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
+    const navigate = useNavigate()
 
     // 🔹 Inicializa user corretamente do sessionStorage
     const [user, setUser] = useState(() => {
@@ -40,6 +42,12 @@ export function UserProvider({ children }) {
             if (data.user && data.token) {
                 setUser(data.user);
                 setToken(data.token);
+                if (data.user.nivel == 'adm') {
+                    navigate("/dashboard")
+                } else  {
+                    navigate("/")
+                }
+
 
                 sessionStorage.setItem("user", JSON.stringify(data.user));
                 sessionStorage.setItem("token", data.token);

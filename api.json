@@ -1,79 +1,183 @@
 {
-  "product": [
-    {
-      "id": 1,
-      "name": "Tênis Esportivo",
-      "slug": "tenis-esportivo",
-      "preco": 199.99,
-      "desconto": 100,
-      "descricao": "asdjashdjashdjahsdjahsdjahsjdhasjdhasjdhasjdhajsdhajsdhajsdhajsdhajshdajsdhajshdjasdhjashdjadhjasdhajshdajsdhasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
-      "categoria": "Calçados",
-      "estoque": 15,
-      "peso": 30.3,
-      "avaliacao": 4.5,
-      "imagens": [
-        "/vite.svg",
-        "/vite.svg",
-        "/vite.svg",
-        "/vite.svg",
-        "/vite.svg",
-        "/vite.svg",
-        "/vite.svg",
-        "/vite.svg",
-        "/vite.svg",
-        "/vite.svg"
-      ],
-      "detalhes": [
-        "Material respirável",
-        "Solado antiderrapante",
-        "Disponível nos tamanhos 36-44"
-      ]
-    }
-  ],
-  "login": [
-    {
-      "email": "israel@email.com",
-      "senha": "123456"
-    }
-  ],
-  "register": [
-    {
-      "name": "israel",
-      "email": "israel2@email.com",
-      "phone": "85988292827",
-      "password": "123456",
-      "id": 1
-    },
-    {
-      "name": "marco",
-      "email": "israel@email.com",
-      "phone": "85988292828",
-      "password": "654321",
-      "id": 2
-    },
-    {
-      "name": "marco",
-      "email": "israel@email.com",
-      "phone": "85988292827",
-      "password": "123456",
-      "id": 3
-    },
-    {
-      "name": "israel",
-      "email": "israel@email.com",
-      "phone": "85988292827",
-      "password": "123456",
-      "id": 4
-    },
-    {
-      "name": "João sousa",
-      "email": "joao@email.com",
-      "phone": "85998433341",
-      "gender": "male",
-      "cpf": "82281156303",
-      "birthDate": "1998-03-09",
-      "password": "123456",
-      "id": 5
-    }
-  ]
+   "product":[
+      {
+         "id":1,
+         "name":"Tênis Esportivo",
+         "slug":"tenis-esportivo",
+         "preco":199.99,
+         "desconto":100,
+         "descricao":"asdjashdjashdjahsdjahsdjahsjdhasjdhasjdhasjdhajsdhajsdhajsdhajsdhajshdajsdhajshdjasdhjashdjadhjasdhajshdajsdhasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+         "categoria":"Calçados",
+         "estoque":15,
+         "peso":30.3,
+         "avaliacao":4.5,
+         "imagens":[
+            "/vite.svg",
+            "/vite.svg",
+            "/vite.svg",
+            "/vite.svg",
+            "/vite.svg",
+            "/vite.svg",
+            "/vite.svg",
+            "/vite.svg",
+            "/vite.svg",
+            "/vite.svg"
+         ],
+         "detalhes":[
+            "Material respirável",
+            "Solado antiderrapante",
+            "Disponível nos tamanhos 36-44"
+         ]
+      }
+   ],
+   "orders":[
+      {
+         "id":101,
+         "date":"2026-02-20",
+         "status":"Entregue",
+         "valor_total":199.99,
+         "cod_rastreio":"BR123456789",
+         "previsao_entrega":"2026-02-25",
+         "endereco":{
+            "logradouro":"Rua A",
+            "numero":"123",
+            "bairro":"Centro",
+            "cidade":"Fortaleza",
+            "estado":"CE",
+            "cep":"60000-000"
+         },
+         "items":[
+            {
+               "quantidade":1,
+               "valor_unitario":199.99,
+               "product":{
+                  "id":1,
+                  "name":"Tênis Esportivo",
+                  "slug":"tenis-esportivo",
+                  "preco":199.99,
+                  "desconto":100,
+                  "descricao":"asdjashdjashdjahsdjahsdjahsjdhasjdhasjdhasjdhajsdhajsdhajsdhajsdhajshdajsdhajshdjasdhjashdjadhjasdhajshdajsdhasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+                  "categoria":"Calçados",
+                  "estoque":15,
+                  "peso":30.3,
+                  "avaliacao":4.5,
+                  "imagens":[
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg"
+                  ],
+                  "detalhes":[
+                     "Material respirável",
+                     "Solado antiderrapante",
+                     "Disponível nos tamanhos 36-44"
+                  ]
+               }
+            }
+         ]
+      },
+      {
+         "id":102,
+         "date":"2026-02-22",
+         "status":"Em trânsito",
+         "valor_total":299.99,
+         "cod_rastreio":"BR987654321",
+         "previsao_entrega":"2026-02-28",
+         "endereco":{
+            "logradouro":"Avenida B",
+            "numero":"456",
+            "bairro":"Aldeota",
+            "cidade":"Fortaleza",
+            "estado":"CE",
+            "cep":"60100-000"
+         },
+         "items":[
+            {
+               "quantidade":2,
+               "valor_unitario":149.99,
+               "product":{
+                  "id":1,
+                  "name":"Tênis Esportivo",
+                  "slug":"tenis-esportivo",
+                  "preco":199.99,
+                  "desconto":100,
+                  "descricao":"asdjashdjashdjahsdjahsdjahsjdhasjdhasjdhasjdhajsdhajsdhajsdhajsdhajshdajsdhajshdjasdhjashdjadhjasdhajshdajsdhasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+                  "categoria":"Calçados",
+                  "estoque":15,
+                  "peso":30.3,
+                  "avaliacao":4.5,
+                  "imagens":[
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg",
+                     "/vite.svg"
+                  ],
+                  "detalhes":[
+                     "Material respirável",
+                     "Solado antiderrapante",
+                     "Disponível nos tamanhos 36-44"
+                  ]
+               }
+            }
+         ]
+      }
+   ],
+   "login":[
+      {
+         "email":"israel@email.com",
+         "senha":"123456"
+      }
+   ],
+   "register":[
+      {
+         "name":"israel",
+         "email":"israel2@email.com",
+         "phone":"85988292827",
+         "password":"123456",
+         "id":1
+      },
+      {
+         "name":"marco",
+         "email":"israel@email.com",
+         "phone":"85988292828",
+         "password":"654321",
+         "id":2
+      },
+      {
+         "name":"marco",
+         "email":"israel@email.com",
+         "phone":"85988292827",
+         "password":"123456",
+         "id":3
+      },
+      {
+         "name":"israel",
+         "email":"israel@email.com",
+         "phone":"85988292827",
+         "password":"123456",
+         "id":4
+      },
+      {
+         "name":"João sousa",
+         "email":"joao@email.com",
+         "phone":"85998433341",
+         "gender":"male",
+         "cpf":"82281156303",
+         "birthDate":"1998-03-09",
+         "password":"123456",
+         "id":5
+      }
+   ]
 }

@@ -67,7 +67,7 @@ export default function Header() {
                 <div className="flex-1 flex justify-center">
 
                     <img
-                        src="/logo-icon.svg"
+                        src="public\logo-icon-name.svg"
                         alt="Logo"
                         className="h-10 object-contain opacity-90"
                     />

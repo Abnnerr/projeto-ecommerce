@@ -7,6 +7,7 @@ import PageLayout from "../layouts/PageLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import PageProduct from "../pages/PageProduct";
 import ResetPassword from "../pages/ResetPassword";
+import Checkout from "../pages/Checkout";
 
 const Paths = () => {
     return (

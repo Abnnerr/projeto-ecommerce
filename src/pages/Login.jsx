@@ -1,5 +1,4 @@
 import { useState } from "react";
-import {AXIOS} from "../services"
 import { useUser } from "../contexts/UsuarioProvider";
 import { useNavigate } from "react-router";
 
@@ -15,7 +14,6 @@ export default function Login() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [user, setUser] = useState()
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });

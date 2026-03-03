@@ -1,72 +1,106 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 
 const Categoria = () => {
   const categorias = [
-    { 
-      titulo: "Frontend", 
-      cor: "from-blue-500", 
-      // Substitua pela URL da sua foto de linguagens/chaveiros
-      imagem: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?q=80&w=500&auto=format&fit=crop" 
+    {
+      titulo: "Teste",
+      imagem:
+        "https://images.unsplash.com/photo-1627398242454-45a1465c2479?q=80&w=500&auto=format&fit=crop",
     },
-    { 
-      titulo: "Backend", 
-      cor: "from-purple-500", 
-      imagem: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=500&auto=format&fit=crop" 
+    {
+      titulo: "TES",
+      imagem:
+        "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=500&auto=format&fit=crop",
     },
-    { 
-      titulo: "Mobile", 
-      cor: "from-orange-500", 
-      imagem: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=500&auto=format&fit=crop" 
+    {
+      titulo: "Mobile",
+      imagem:
+        "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=500&auto=format&fit=crop",
     },
-    { 
-      titulo: "DevOps", 
-      cor: "from-emerald-500", 
-      imagem: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?q=80&w=500&auto=format&fit=crop" 
+    {
+      titulo: "DevOps",
+      imagem:
+        "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?q=80&w=500&auto=format&fit=crop",
     },
   ];
 
   return (
-    <section className="py-16 bg-white flex justify-center">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          
+    <section className="py-16  flex justify-center">
+      <div className="max-w-6xl mx-auto px-6 w-full">
+
+        {/* titulo opcional */}
+        <h2 className="text-[#1E1E1E] text-lg font-semibold mb-8 tracking-wide">
+          Categorias
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
           {categorias.map((item, index) => (
             <motion.div
               key={index}
-              whileHover={{ scale: 1.05, y: -8 }}
-              className="relative flex items-center justify-center min-h-[160px] rounded-3xl overflow-hidden group cursor-pointer shadow-2xl"
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="
+              relative
+              h-[160px]
+              rounded-xl
+              overflow-hidden
+              cursor-pointer
+              border border-[#2A2A2A]
+              bg-[#1E1E1E]
+              group
+              "
             >
-              {/* 1. A Foto de Fundo */}
-              <img 
-                src={item.imagem} 
+
+              {/* imagem */}
+              <img
+                src={item.imagem}
                 alt={item.titulo}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="
+                absolute inset-0
+                w-full h-full
+                object-cover
+                opacity-60
+                group-hover:opacity-80
+                transition duration-300
+                "
               />
 
-              {/* 2. Overlay Escuro (para o texto não sumir na foto) */}
-              <div className="absolute inset-0 bg-[#050b18]/80 group-hover:bg-[#050b18]/60 transition-colors duration-500"></div>
+              {/* overlay escuro */}
+              <div className="absolute inset-0 bg-[#121212]/60"></div>
 
-              {/* 3. Brilho de Cor no Hover (Glow) */}
-              <div className={`absolute inset-0 bg-gradient-to-t ${item.cor} to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-500`}></div>
+              {/* conteúdo */}
+              <div className="relative z-10 h-full flex items-center justify-center">
 
-              {/* 4. Conteúdo Central */}
-              <div className="relative z-10 text-center px-4">
-                <h3 className="text-2xl font-black text-white uppercase italic tracking-tighter drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
-                  {item.titulo}
-                </h3>
-                
-                {/* Linha Neon Inferior */}
-                <div className="flex justify-center mt-2">
-                  <div className={`h-1 w-12 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)] group-hover:w-20 transition-all duration-500`}></div>
+                <div className="text-center">
+
+                  <h3 className="
+                    text-[#EAEAEA]
+                    font-semibold
+                    text-lg
+                    tracking-wide
+                  ">
+                    {item.titulo}
+                  </h3>
+
+                  {/* linha tech minimalista */}
+                  <div className="
+                    mx-auto mt-2
+                    h-[2px] w-6
+                    bg-[#3B82F6]
+                    opacity-70
+                    group-hover:w-10
+                    transition-all duration-300
+                  " />
+
                 </div>
+
               </div>
 
-              {/* Borda de Vidro sutil */}
-              <div className="absolute inset-0 border border-white/10 rounded-3xl pointer-events-none"></div>
             </motion.div>
           ))}
-          
+
         </div>
       </div>
     </section>

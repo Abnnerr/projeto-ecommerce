@@ -1,183 +1,81 @@
 {
-   "product":[
-      {
-         "id":1,
-         "name":"Tênis Esportivo",
-         "slug":"tenis-esportivo",
-         "preco":199.99,
-         "desconto":100,
-         "descricao":"asdjashdjashdjahsdjahsdjahsjdhasjdhasjdhasjdhajsdhajsdhajsdhajsdhajshdajsdhajshdjasdhjashdjadhjasdhajshdajsdhasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
-         "categoria":"Calçados",
-         "estoque":15,
-         "peso":30.3,
-         "avaliacao":4.5,
-         "imagens":[
-            "/vite.svg",
-            "/vite.svg",
-            "/vite.svg",
-            "/vite.svg",
-            "/vite.svg",
-            "/vite.svg",
-            "/vite.svg",
-            "/vite.svg",
-            "/vite.svg",
-            "/vite.svg"
-         ],
-         "detalhes":[
-            "Material respirável",
-            "Solado antiderrapante",
-            "Disponível nos tamanhos 36-44"
-         ]
-      }
-   ],
-   "orders":[
-      {
-         "id":101,
-         "date":"2026-02-20",
-         "status":"Entregue",
-         "valor_total":199.99,
-         "cod_rastreio":"BR123456789",
-         "previsao_entrega":"2026-02-25",
-         "endereco":{
-            "logradouro":"Rua A",
-            "numero":"123",
-            "bairro":"Centro",
-            "cidade":"Fortaleza",
-            "estado":"CE",
-            "cep":"60000-000"
-         },
-         "items":[
-            {
-               "quantidade":1,
-               "valor_unitario":199.99,
-               "product":{
-                  "id":1,
-                  "name":"Tênis Esportivo",
-                  "slug":"tenis-esportivo",
-                  "preco":199.99,
-                  "desconto":100,
-                  "descricao":"asdjashdjashdjahsdjahsdjahsjdhasjdhasjdhasjdhajsdhajsdhajsdhajsdhajshdajsdhajshdjasdhjashdjadhjasdhajshdajsdhasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
-                  "categoria":"Calçados",
-                  "estoque":15,
-                  "peso":30.3,
-                  "avaliacao":4.5,
-                  "imagens":[
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg"
-                  ],
-                  "detalhes":[
-                     "Material respirável",
-                     "Solado antiderrapante",
-                     "Disponível nos tamanhos 36-44"
-                  ]
-               }
-            }
-         ]
-      },
-      {
-         "id":102,
-         "date":"2026-02-22",
-         "status":"Em trânsito",
-         "valor_total":299.99,
-         "cod_rastreio":"BR987654321",
-         "previsao_entrega":"2026-02-28",
-         "endereco":{
-            "logradouro":"Avenida B",
-            "numero":"456",
-            "bairro":"Aldeota",
-            "cidade":"Fortaleza",
-            "estado":"CE",
-            "cep":"60100-000"
-         },
-         "items":[
-            {
-               "quantidade":2,
-               "valor_unitario":149.99,
-               "product":{
-                  "id":1,
-                  "name":"Tênis Esportivo",
-                  "slug":"tenis-esportivo",
-                  "preco":199.99,
-                  "desconto":100,
-                  "descricao":"asdjashdjashdjahsdjahsdjahsjdhasjdhasjdhasjdhajsdhajsdhajsdhajsdhajshdajsdhajshdjasdhjashdjadhjasdhajshdajsdhasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
-                  "categoria":"Calçados",
-                  "estoque":15,
-                  "peso":30.3,
-                  "avaliacao":4.5,
-                  "imagens":[
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg",
-                     "/vite.svg"
-                  ],
-                  "detalhes":[
-                     "Material respirável",
-                     "Solado antiderrapante",
-                     "Disponível nos tamanhos 36-44"
-                  ]
-               }
-            }
-         ]
-      }
-   ],
-   "login":[
-      {
-         "email":"israel@email.com",
-         "senha":"123456"
-      }
-   ],
-   "register":[
-      {
-         "name":"israel",
-         "email":"israel2@email.com",
-         "phone":"85988292827",
-         "password":"123456",
-         "id":1
-      },
-      {
-         "name":"marco",
-         "email":"israel@email.com",
-         "phone":"85988292828",
-         "password":"654321",
-         "id":2
-      },
-      {
-         "name":"marco",
-         "email":"israel@email.com",
-         "phone":"85988292827",
-         "password":"123456",
-         "id":3
-      },
-      {
-         "name":"israel",
-         "email":"israel@email.com",
-         "phone":"85988292827",
-         "password":"123456",
-         "id":4
-      },
-      {
-         "name":"João sousa",
-         "email":"joao@email.com",
-         "phone":"85998433341",
-         "gender":"male",
-         "cpf":"82281156303",
-         "birthDate":"1998-03-09",
-         "password":"123456",
-         "id":5
-      }
-   ]
+    "product": [
+        {
+            "id": 1,
+            "name": "Tênis Esportivo Pro Runner",
+            "slug": "tenis-esportivo",
+            "marca": "TechRun",
+            "categoria": "Calçados",
+            "subcategoria": "Tênis Esportivo",
+            "preco": 199.99,
+            "preco_original": 299.99,
+            "desconto": 33,
+            "descricao": "Tênis esportivo leve e confortável, ideal para corridas, caminhadas e uso diário. Possui tecnologia de amortecimento avançada e material respirável que mantém seus pés secos e confortáveis.",
+            "descricao_curta": "Tênis leve, confortável e respirável para uso diário.",
+            "estoque": 15,
+            "sku": "TR-PR-001",
+            "codigo_barras": "7891234567890",
+            "peso": 0.8,
+            "dimensoes": {
+                "altura": 12,
+                "largura": 22,
+                "comprimento": 32
+            },
+            "avaliacao": 5,
+            "numero_avaliacoes": 87,
+            "vendidos": 243,
+            "cores": [
+                "Preto",
+                "Branco",
+                "Azul"
+            ],
+            "tamanhos": [
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44
+            ],
+            "imagens": [
+                "/vite.svg",
+                "/vite.svg",
+                "/vite.svg",
+                "/vite.svg"
+            ],
+            "detalhes": [
+                "Material respirável",
+                "Solado antiderrapante",
+                "Amortecimento avançado",
+                "Palmilha confortável",
+                "Ideal para corrida e caminhada"
+            ],
+            "especificacoes": {
+                "Material": "Malha respirável",
+                "Solado": "Borracha antiderrapante",
+                "Palmilha": "Espuma de memória",
+                "Fechamento": "Cadarço",
+                "Indicação": "Corrida e uso casual",
+                "Garantia": "3 meses"
+            },
+            "frete": {
+                "gratis": true,
+                "prazo_min": 3,
+                "prazo_max": 7
+            },
+            "tags": [
+                "tenis",
+                "esportivo",
+                "corrida",
+                "confortavel",
+                "leve"
+            ],
+            "ativo": true,
+            "criado_em": "2026-02-28T10:00:00",
+            "atualizado_em": "2026-02-28T10:00:00"
+        }
+    ]
 }

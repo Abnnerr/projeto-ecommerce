@@ -1,7 +1,12 @@
 import { useState } from "react";
-import { AXIOS } from "../services"
+import { useUser } from "../contexts/UsuarioProvider";
+import { useNavigate } from "react-router";
 
 export default function Login() {
+
+    const {login} = useUser()
+    const navigate = useNavigate()
+
     const [form, setForm] = useState({
         email: "",
         senha: "",
@@ -9,7 +14,6 @@ export default function Login() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [user, setUser] = useState()
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,20 +25,8 @@ export default function Login() {
 
         try {
             setLoading(true);
-
-            const request = await AXIOS.get("/login");
-
-            const foundUser = request.data.find(
-                e => e.email === form.email
-            );
-
-            if (!foundUser) {
-                throw new Error("Email ou senha inválidos.");
-            }
-
-            setUser(foundUser);
-            console.log(foundUser);
-
+            await login(form.email, form.password)
+            navigate('/')
         } catch (err) {
             setError(
                 err.response?.data?.message ||
@@ -47,7 +39,7 @@ export default function Login() {
     }
 
     return (
-        <div className="bg-(--bg) min-h-screen  flex flex-col">
+        <div className=" min-h-screen  flex flex-col">
             <main className="flex-1 flex items-center justify-center px-4">
                 <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-6 sm:p-8">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">

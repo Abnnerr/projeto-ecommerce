@@ -1,14 +1,15 @@
 import { useState } from "react";
-import {AXIOS} from "../services"
+import { AXIOS } from "../services"
 
 export default function Login() {
     const [form, setForm] = useState({
         email: "",
-        password: "",
+        senha: "",
     });
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [user, setUser] = useState()
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,13 +21,25 @@ export default function Login() {
 
         try {
             setLoading(true);
-            await AXIOS.post("/login", {
-                email: form.email,
-                password: form.password,
-            });
+
+            const request = await AXIOS.get("/login");
+
+            const foundUser = request.data.find(
+                e => e.email === form.email
+            );
+
+            if (!foundUser) {
+                throw new Error("Email ou senha inválidos.");
+            }
+
+            setUser(foundUser);
+            console.log(foundUser);
+
         } catch (err) {
             setError(
-                err.response?.data?.message || "Email ou senha inválidos."
+                err.response?.data?.message ||
+                err.message ||
+                "Email ou senha inválidos."
             );
         } finally {
             setLoading(false);
@@ -60,10 +73,10 @@ export default function Login() {
                         <div>
                             <input
                                 type="password"
-                                name="password"
+                                name="senha"
                                 placeholder="Senha"
                                 required
-                                value={form.password}
+                                value={form.senha}
                                 onChange={handleChange}
                                 className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
                             />

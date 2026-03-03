@@ -1,5 +1,6 @@
 import { useState } from "react";
-import {AXIOS} from "../services"
+import { AXIOS } from "../services"
+import { maskPhone, isValidPhone, maskCPF, isValidCPF } from "../utils/index";
 
 
 export default function Register() {
@@ -7,12 +8,15 @@ export default function Register() {
         name: "",
         email: "",
         phone: "",
-        password: "",
+        gender: "",
+        cpf: "",
+        birthDate: "",
+        senha: "",
         confirmPassword: "",
     });
 
 
-    
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -23,31 +27,49 @@ export default function Register() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        setLoading(false)
         setError("");
         setSuccess("");
 
-        if (form.password !== form.confirmPassword) {
+        if (form.phone && !isValidPhone(form.phone)) {
+            console.log("Telefone inválido:", form.phone);
+            setError("Telefone inválido. Use DDD + número.");
+            return;
+        }
+
+        if (!isValidCPF(form.cpf)) {
+            console.log("CPF inválido:", form.cpf);
+            setError("CPF inválido.");
+            return;
+        }
+
+        if (form.senha !== form.confirmPassword) {
             setError("As senhas não coincidem.");
             return;
         }
 
         try {
             setLoading(true);
-            await AXIOS.post("/register", {
+            const request = await AXIOS.post("/users", {
                 name: form.name,
                 email: form.email,
-                phone: form.phone || null,
-                password: form.password,
+                phone: form.phone ? form.phone.replace(/\D/g, "") : null,
+                gender: form.gender,
+                cpf: form.cpf.replace(/\D/g, ""),
+                birthDate: form.birthDate,
+                senha: form.password,
             });
 
             setSuccess("Conta criada com sucesso!");
+            console.log(request.data);
 
             setForm({
                 name: "",
                 email: "",
                 phone: "",
-                password: "",
+                gender: "",
+                cpf: "",
+                birthDate: "",
+                senha: "",
                 confirmPassword: "",
             });
         } catch (err) {
@@ -61,19 +83,7 @@ export default function Register() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col">
-            <header className="bg-zinc-900 shadow-sm">
-                <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-                    <h1 className="text-xl font-mono text-gray-300">3Dtech</h1>
-                    <a
-                        href="/login"
-                        className="text-sm text-gray-300 hover:text-purple-600 transition"
-                    >
-                        Entrar
-                    </a>
-                </div>
-            </header>
-
+        <div className="min-h-screen bg-zinc-800 flex flex-col">
             <main className="flex-1 flex items-center justify-center px-4">
                 <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-6 sm:p-8">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
@@ -116,18 +126,51 @@ export default function Register() {
                         <input
                             type="tel"
                             name="phone"
-                            placeholder="Telefone (opcional)"
+                            placeholder="Telefone (DDD + número)"
                             value={form.phone}
+                            onChange={(e) => setForm({... form, phone: maskPhone(e.target.value) })
+                        }
+                            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                        />
+
+                        <select
+                            name="gender"
+                            required
+                            value={form.gender}
                             onChange={handleChange}
+                            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                        >
+                            <option value="">Selecione o gênero</option>
+                            <option value="male">Masculino</option>
+                            <option value="female">Feminino</option>
+                            <option value="other">Outro</option>
+                            <option value="prefer_not_say">Prefiro não informar</option>
+                        </select>
+
+                        <input
+                            type="text"
+                            name="cpf"
+                            placeholder="CPF"
+                            value={form.cpf}
+                            onChange={(e) =>
+                                setForm({ ...form, cpf: maskCPF(e.target.value) })}
                             className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
                         />
 
                         <input
+                            type="date"
+                            name="birthDate"
+                            required
+                            value={form.birthDate}
+                            onChange={handleChange}
+                            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200" />
+
+                        <input
                             type="password"
-                            name="password"
+                            name="senha"
                             placeholder="Senha"
                             required
-                            value={form.password}
+                            value={form.senha}
                             onChange={handleChange}
                             className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
                         />
@@ -155,7 +198,7 @@ export default function Register() {
                         Já possui uma conta?{" "}
                         <a
                             href="/login"
-                            className="text-indigo-600 hover:underline font-medium"
+                            className="text-gray-600 hover:underline font-medium"
                         >
                             Entrar
                         </a>

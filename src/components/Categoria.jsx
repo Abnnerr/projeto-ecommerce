@@ -1,44 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { AXIOS } from "../services";
 
 const Categoria = () => {
-  const categorias = [
-    {
-      titulo: "Teste",
-      imagem:
-        "https://images.unsplash.com/photo-1627398242454-45a1465c2479?q=80&w=500&auto=format&fit=crop",
-    },
-    {
-      titulo: "TES",
-      imagem:
-        "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=500&auto=format&fit=crop",
-    },
-    {
-      titulo: "Mobile",
-      imagem:
-        "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=500&auto=format&fit=crop",
-    },
-    {
-      titulo: "DevOps",
-      imagem:
-        "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?q=80&w=500&auto=format&fit=crop",
-    },
+  const [categorias, setCategorias] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Diferentes fundos para cada card
+  const fundos = [
+    "https://images.unsplash.com/photo-1627398242454-45a1465c2479?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?q=80&w=500&auto=format&fit=crop"
   ];
+
+  useEffect(() => {
+    async function fetchCategorias() {
+      try {
+        const res = await AXIOS.get("/api/categories");
+        // pega apenas as primeiras 4 categorias
+        setCategorias(res.data.slice(0, 4));
+      } catch (err) {
+        console.error("Erro ao buscar categorias:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchCategorias();
+  }, []);
+
+  if (loading) {
+    return <div className="py-16 text-center">Carregando categorias...</div>;
+  }
 
   return (
     <section className="py-16  flex justify-center">
       <div className="max-w-6xl mx-auto px-6 w-full">
 
-        {/* titulo opcional */}
-        <h2 className="text-[#1E1E1E] text-lg font-semibold mb-8 tracking-wide">
-          Categorias
-        </h2>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
           {categorias.map((item, index) => (
             <motion.div
-              key={index}
+              key={item.id}
               whileHover={{ y: -4 }}
               transition={{ duration: 0.2 }}
               className="
@@ -55,8 +58,8 @@ const Categoria = () => {
 
               {/* imagem */}
               <img
-                src={item.imagem}
-                alt={item.titulo}
+                src={fundos[index % fundos.length]}
+                alt={item.nome}
                 className="
                 absolute inset-0
                 w-full h-full
@@ -81,7 +84,7 @@ const Categoria = () => {
                     text-lg
                     tracking-wide
                   ">
-                    {item.titulo}
+                    {item.nome}
                   </h3>
 
                   {/* linha tech minimalista */}
@@ -100,7 +103,6 @@ const Categoria = () => {
 
             </motion.div>
           ))}
-
         </div>
       </div>
     </section>

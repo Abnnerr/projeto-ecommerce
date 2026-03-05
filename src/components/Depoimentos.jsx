@@ -1,24 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { AXIOS } from "../services";
 
 const Depoimentos = () => {
-  const reviews = [
-    {
-      nome: "Elvis",
-      texto: "Produtos de altíssima fidelidade e acabamento impecável.",
-      foto: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=100&auto=format&fit=crop"
-    },
-    {
-      nome: "Diego",
-      texto: "Entrega ágil e um cuidado único em cada detalhe.",
-      foto: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=100&auto=format&fit=crop"
-    },
-    {
-      nome: "Juliana",
-      texto: "Excelente qualidade e experiência profissional.",
-      foto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100&auto=format&fit=crop"
+
+  const [reviews, setReviews] = useState([])
+
+  useEffect(() => {
+    async function buscarReview() {
+      try {
+        const response = await AXIOS.get('/api/reviews')
+        console.log(response);
+
+        setReviews(response.data)
+      } catch (err) {
+        console.log(err)
+      }
     }
-  ];
+    buscarReview()
+  }, [])
 
   return (
     <section className="py-20 ">
@@ -57,8 +57,28 @@ const Depoimentos = () => {
             >
 
               {/* Foto */}
-              <img
-                src={item.foto}
+
+              {
+                item.usuarios.foto ? (
+                  <img
+                    src={item.usuarios.foto}
+                    alt={item.nome}
+                    className="
+                w-12 h-12
+                rounded-full
+                object-cover
+                border border-[#2A2A2A]
+                "
+                  />
+                ) : (
+                  <div className="px-2.5 py-2 *:font-bold *:text-xl rounded-full bg-gray-600 flex  justify-center gap-1">
+                    <span> {item.usuarios.nome[0].toUpperCase()}</span>
+                    <span> {item.usuarios.nome[1].toUpperCase()}</span>
+                  </div>
+                )
+              }
+              {/* <img
+                src={item.usuarios.foto}
                 alt={item.nome}
                 className="
                 w-12 h-12
@@ -66,7 +86,7 @@ const Depoimentos = () => {
                 object-cover
                 border border-[#2A2A2A]
                 "
-              />
+              /> */}
 
               {/* Conteúdo */}
               <div>
@@ -77,7 +97,7 @@ const Depoimentos = () => {
                   leading-relaxed
                   mb-2
                 ">
-                  "{item.texto}"
+                  "{item.descricao}"
                 </p>
 
                 <span className="
@@ -85,7 +105,7 @@ const Depoimentos = () => {
                   text-xs
                   font-medium
                 ">
-                  {item.nome}
+                  {item.usuarios.nome}
                 </span>
 
               </div>

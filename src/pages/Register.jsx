@@ -91,7 +91,7 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-800 flex flex-col">
+    <div className="min-h-screen bg-zinc-800 flex flex-col p-10">
       <main className="flex-1 flex items-center justify-center px-4">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-6 sm:p-8">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">

@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { FaEye, FaImage, FaLink, FaPlus, FaToggleOn } from "react-icons/fa";
+import { AXIOS } from "../../services";
 
 const summary = [
   { id: "ativos", label: "Banners ativos", value: "12", icon: FaImage },
@@ -13,6 +15,22 @@ const banners = [
 ];
 
 const Banners = () => {
+
+//   const [banners, setBanners] = useState()
+
+//   useEffect(() => {
+//     async function buscarBanners() {
+// try {
+//   const response = await AXIOS.get('/api/banners')
+//   console.log(response.data)
+//   setBanners(response.data)
+// }catch(err) {
+//   console.log(err)
+// }
+//     }
+//     buscarBanners()
+//   }, [])
+
   return (
     <section className="space-y-6">
       <header className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">

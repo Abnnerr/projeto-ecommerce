@@ -5,6 +5,7 @@ import Depoimentos from "../components/Depoimentos";
 import ShippingSection from "../components/ShippingSection";
 import { AXIOS } from "../services";
 import BannerSection from "../components/BannerSection";
+import { Title } from "react-head";
 
 const Home = () => {
     const [categories, setCategories] = useState([]);
@@ -26,6 +27,7 @@ const Home = () => {
 
     return (
         <main>
+            <Title>Home - 3Dtech</Title>
             <div>
                 <BannerSection />
                 <Categoria />

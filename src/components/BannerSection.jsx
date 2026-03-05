@@ -43,6 +43,8 @@ const BannerSection = () => {
   // };
 
   // Auto-play do carrossel
+
+  
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();

@@ -202,6 +202,7 @@ const Checkout = () => {
                 className="w-16 p-3 rounded-md border border-gray-300"
               />
             </div>
+
           </div>
 
           {/* CUPOM */}

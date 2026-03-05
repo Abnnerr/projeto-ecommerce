@@ -11,6 +11,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import PageProduct from "../pages/PageProduct";
 import ResetPassword from "../pages/ResetPassword";
 import OrdersPage from "../pages/Orders";
+import Dashboard from "../pages/admin/Dashboard";
 import Usuario from "../pages/Usuario";
 
 import AdminDashboard from "../pages/admin/Dashboard";

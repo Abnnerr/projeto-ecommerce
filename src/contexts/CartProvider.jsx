@@ -4,6 +4,7 @@ import { AXIOS } from "../services";
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
+    const [id, setId] = useState()
     const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -155,7 +156,10 @@ export function CartProvider({ children }) {
 
                 isOpenCoupon,
                 openCoupon,
-                closeCoupon
+                closeCoupon,
+
+                id,
+                setId
             }}
         >
             {children}

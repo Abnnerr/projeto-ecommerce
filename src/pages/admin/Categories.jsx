@@ -4,13 +4,20 @@ import { AXIOS } from "../../services";
 import { useCart } from "../../contexts/CartProvider";
 
 const Categories = () => {
-  const { openCatego, openEditCatego, setIdCatego} = useCart()
+  const { openCatego, openEditCatego, setIdCatego } = useCart()
+  const { token } = JSON.parse(localStorage.getItem("user")) || {};
 
   const [categories, setCategories] = useState([])
   useEffect(() => {
     async function buscarCategorias() {
       try {
-        const response = await AXIOS.get("/api/categories");
+        const response = await AXIOS.get("/api/categories",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
         console.log(response.data)
         setCategories(response.data);
       } catch (err) {
@@ -24,7 +31,7 @@ const Categories = () => {
     try {
       const response = await AXIOS.delete(`/api/categories/${id}`)
       console.log(response)
-    }catch(err) {
+    } catch (err) {
       console.log(err)
     }
   }
@@ -122,7 +129,7 @@ const Categories = () => {
                   {categoria.produtos?.length || 0} produtos
                 </span>
 
-                <button onClick={() => {openEditCatego(), setIdCatego(categoria.id)}} className="rounded-md border border-white/10 px-3 py-1 text-xs transition hover:border-[var(--bgButton)]">
+                <button onClick={() => { openEditCatego(), setIdCatego(categoria.id) }} className="rounded-md border border-white/10 px-3 py-1 text-xs transition hover:border-[var(--bgButton)]">
                   Editar
                 </button>
                 <button onClick={() => apagarCategoria(categoria.id)} className="rounded-md border border-white/10 px-3 py-1 text-xs transition hover:border-[var(--bgButton)]">

@@ -2,42 +2,47 @@ import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
 import UserSideBar from "../components/UserSideBar";
 import ProductSideBar from "../components/ProductSideBar";
-import { useUser } from "../contexts/UsuarioProvider";
 import ProductPutBar from "../components/ProductPutBar";
 import CategoriesBar from "../components/CategoriesBar";
 import CategoriesEditBar from "../components/CategoriesEditBar";
 import CouponsBar from "../components/CuponsBar";
+import AdminSidebar from "../components/SideBarBoard";
+import { jwtDecode } from "jwt-decode";
 
 const BoardLayout = () => {
-    const { user } = useUser();
+
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!user) {
+
+        const token = sessionStorage.getItem("token");
+
+        if (!token) {
+            navigate("/");
+            return;
+        }
+
+        const decoded = jwtDecode(token);
+
+        if (decoded.nivel !== "admin") {
             navigate("/");
         }
-        else if(user.nivel === 'admin') {
-            return
-        }
-        else {
-            navigate('/')
-        }
-    }, [user, navigate]);
 
-    if (!user) return null; // evita renderizar enquanto redireciona
+    }, [navigate]);
+    
     return (
-        <div className="min-h-screen bg-[var(--bg)] text-white">
-
+        <div className="min-h-screen bg-[var(--bg)] text-white flex">
+            <AdminSidebar />
             <div className="mx-auto w-full max-w-7xl px-4 py-6 md:px-6">
                 <Outlet />
             </div>
             <ProductSideBar />
-            <ProductPutBar  />
+            <ProductPutBar />
             <UserSideBar />
             <CategoriesBar />
             <CategoriesEditBar />
             <CouponsBar />
-            
+
         </div>
     );
 }

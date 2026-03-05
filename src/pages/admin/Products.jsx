@@ -7,6 +7,9 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const { openProduct, openEdit, setId } = useCart()
 
+  console.log(products);
+
+
   useEffect(() => {
     async function buscarProdutos() {
       try {
@@ -24,8 +27,8 @@ const Products = () => {
     try {
       const response = await AXIOS.delete(`/api/products/${id}`)
       console.log(response.data);
-      
-    } catch(err) {
+
+    } catch (err) {
       console.log(err)
     }
   }
@@ -58,11 +61,11 @@ const Products = () => {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <article className="rounded-2xl bg-[var(--bgCard)] p-4 shadow-lg ring-1 ring-white/5">
           <p className="text-sm text-[var(--textColor)]">Produtos ativos</p>
-          <p className="mt-2 text-2xl font-bold">{products.filter(p => p.estoque > 10).length}</p>
+          <p className="mt-2 text-2xl font-bold">{products.filter(p => p.estoque).length}</p>
         </article>
         <article className="rounded-2xl bg-[var(--bgCard)] p-4 shadow-lg ring-1 ring-white/5">
           <p className="text-sm text-[var(--textColor)]">Baixo estoque</p>
-          <p className="mt-2 text-2xl font-bold">{products.filter(p => p.estoque > 0 && p.estoque <= 10).length}</p>
+          <p className="mt-2 text-2xl font-bold">{products.filter(p => p.estoque > 0 && p.estoque <= 5).length}</p>
         </article>
         <article className="rounded-2xl bg-[var(--bgCard)] p-4 shadow-lg ring-1 ring-white/5">
           <p className="text-sm text-[var(--textColor)]">Sem estoque</p>
@@ -88,17 +91,16 @@ const Products = () => {
               {products.map((product) => (
                 <tr key={product.id} className="border-b border-white/5 last:border-b-0">
                   <td className="px-2 py-3 font-medium">{product.id}</td>
-                  <td className="px-2 py-3 font-medium">{product.nome}</td>
-                  <td className="px-2 py-3 text-[var(--textColor)]">{product.categoria?.nome || "-"}</td>
-                  <td className="px-2 py-3">{product.estoque}</td>
+                  <td className="px-2 py-3 font-medium">{product.categoria.nome}</td>
+                  <td className="px-2 py-3 text-[var(--textColor)]">{product.estoque || "-"}</td>
                   <td className="px-2 py-3">{formatPrice(product.valor, product.desconto)}</td>
                   <td className="px-2 py-3">
                     <span
                       className={`rounded-md px-2 py-1 text-xs ${getStatus(product.estoque) === "Ativo"
-                          ? "bg-emerald-500/15 text-emerald-300"
-                          : getStatus(product.estoque) === "Baixo estoque"
-                            ? "bg-amber-500/15 text-amber-300"
-                            : "bg-red-500/15 text-red-300"
+                        ? "bg-emerald-500/15 text-emerald-300"
+                        : getStatus(product.estoque) === "Baixo estoque"
+                          ? "bg-amber-500/15 text-amber-300"
+                          : "bg-red-500/15 text-red-300"
                         }`}
                     >
                       {getStatus(product.estoque)}
@@ -106,10 +108,14 @@ const Products = () => {
                   </td>
                   <td className="px-2 py-3">
                     <div className="flex items-center gap-2">
-                      <button onClick={() => {openEdit( ), setId(product.id)}} className="rounded-md border border-white/10 p-2 transition hover:border-[var(--bgButton)]">
+                      <button onClick={() => {
+                        openEdit(),
+                          setId(product.id)
+                      }
+                      } className="rounded-md border border-white/10 p-2 transition hover:border-[var(--bgButton)]">
                         <FaEdit />
                       </button>
-                      <button onClick={() => apagarProduto(product.id)}  className="rounded-md border border-white/10 p-2 transition hover:border-red-400 hover:text-red-300">
+                      <button onClick={() => apagarProduto(product.id)} className="rounded-md border border-white/10 p-2 transition hover:border-red-400 hover:text-red-300">
                         <FaTrash />
                       </button>
                     </div>

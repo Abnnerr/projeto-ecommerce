@@ -135,7 +135,7 @@ export default function CartSidebar() {
                     </div>
 
                     <button
-                        onClick={() => {navigate('/checkout'), closeCart()}}
+                        onClick={() => {navigate(cart.length > 0 ? '/checkout' : '/'), closeCart()}}
                         className="w-full bg-black text-white py-3 rounded-lg hover:opacity-90 transition"
                     >
                         Finalizar Compra

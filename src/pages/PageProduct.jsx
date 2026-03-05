@@ -82,7 +82,7 @@ export default function PageProduct() {
         return Number((total / produto.avaliacoes.length).toFixed(1));
     }, [produto]);
 
-   
+
     const getImageUrl = (imageUrl) => {
         if (!imageUrl) return null;
         return imageUrl;
@@ -313,8 +313,23 @@ export default function PageProduct() {
 
 
 
-                        <a
-                            href={'/checkout'}
+                        <button
+                            onClick={() => {
+
+                                if (user) {
+                                    addToCart({
+                                        ...produto,
+                                        quantidade,
+                                        tamanhoSelecionado,
+                                        corSelecionada
+                                    })
+                                    navigate('/checkout')
+                                    return
+                                }
+
+                                navigate('/login')
+                            }
+                            }
                             disabled={produto.estoque === 0}
                             className={`flex-1 py-4 rounded-xl text-center
                             ${produto.estoque === 0
@@ -322,7 +337,7 @@ export default function PageProduct() {
                                     : "bg-green-600 text-white"}`}
                         >
                             Comprar Agora
-                        </a>
+                        </button>
                     </div>
 
                     {/* Informações Técnicas */}

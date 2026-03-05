@@ -11,7 +11,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import PageProduct from "../pages/PageProduct";
 import ResetPassword from "../pages/ResetPassword";
 import OrdersPage from "../pages/Orders";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/admin/Dashboard";
 import Usuario from "../pages/Usuario";
 
 import AdminDashboard from "../pages/admin/Dashboard";
@@ -20,6 +20,13 @@ import AdminCoupons from "../pages/admin/Coupons";
 import AdminUsers from "../pages/admin/Users";
 import AdminCategories from "../pages/admin/Categories";
 import AdminProducts from "../pages/admin/Products";
+import AboutUs from "../pages/AboutUs";
+import Blog from "../pages/Blog";
+import OrderTracking from "../pages/OrderTracking";
+import NotFound from "../pages/NotFound";
+import Products from "../pages/Products";
+import ProjectsPersonali from "../pages/ProjectsPersonali";
+import Filamentos from "../pages/Filamentos";
 
 const Paths = () => {
   return (
@@ -28,7 +35,8 @@ const Paths = () => {
         <Route path="/" element={<PageLayout />}>
           <Route index element={<Home />} />
           <Route path="checkout" element={<Checkout />} />
-          <Route path="product/:slug" element={<PageProduct />} />
+          <Route path="product/:id" element={<PageProduct />} />
+          <Route path="products" element={<Products />} />
           <Route path="usuario/:name" element={<Usuario />} />
           <Route path="orders" element={<OrdersPage />} />
         </Route>
@@ -38,9 +46,12 @@ const Paths = () => {
           <Route path="register" element={<Register />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
+          <Route path="about-us" element={<AboutUs />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="order-tracking" element={<OrderTracking />} />
+          <Route path="projects" element={<ProjectsPersonali />} />
+          <Route path="/filamentos-3d" element={<Filamentos />} />
         </Route>
-
-        <Route path="/dashboard" element={<Dashboard />} />
 
         <Route path="/admin" element={<BoardLayout />}>
           <Route index element={<AdminDashboard />} />
@@ -50,6 +61,8 @@ const Paths = () => {
           <Route path="categories" element={<AdminCategories />} />
           <Route path="products" element={<AdminProducts />} />
         </Route>
+        
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

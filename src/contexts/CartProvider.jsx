@@ -1,100 +1,91 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AXIOS } from "../services";
 
-const CartContext = createContext({});
+const CartContext = createContext();
 
 export function CartProvider({ children }) {
+    const [id, setId] = useState()
     const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // 🔥 NOVO ESTADO DO SIDEBAR
+    // 🔥 SIDEBARS
     const [isCartOpen, setIsCartOpen] = useState(false);
-
-    const openCart = () => setIsCartOpen(true);
-    const closeCart = () => setIsCartOpen(false);
-    const toggleCart = () => setIsCartOpen(prev => !prev);
+    const [isOpenProduct, setIsOpenProduct] = useState(false);
+    const [isOpenEdit, setIsOpenEdit] = useState(false);
+    const [isOpenCatego, setIsOpenCatego] = useState(false);
+    const [isOpenEditCatego, setIsOpenEditCatego] = useState(false);
+    const [isOpenCoupon, setIsOpenCoupon] = useState(false);
 
     // =============================
-    // RESTO DO SEU CÓDIGO NORMAL
+    // CARREGAR DO LOCALSTORAGE
     // =============================
-
     useEffect(() => {
-        const fetchCart = async () => {
-            try {
-                const { data } = await AXIOS.get("/api/cart");
-                if (Array.isArray(data)) {
-                    setCart(data);
-                    localStorage.setItem("cart", JSON.stringify(data));
-                }
-            } catch {
-                console.warn("Backend offline.");
-            } finally {
-                setLoading(false);
-            }
-        };
+        const savedCart = localStorage.getItem("cart");
 
-        fetchCart();
+        if (savedCart) {
+            setCart(JSON.parse(savedCart));
+        }
+
+        setLoading(false);
     }, []);
 
+    // =============================
+    // SALVAR NO LOCALSTORAGE
+    // =============================
     useEffect(() => {
         if (!loading) {
             localStorage.setItem("cart", JSON.stringify(cart));
         }
     }, [cart, loading]);
 
-    const syncWithBackend = async (updatedCart) => {
-        if (loading) return;
-        try {
-            await AXIOS.post("/api/cart/sync", updatedCart);
-        } catch {
-            console.warn("Erro ao sincronizar.");
-        }
-    };
+    // =============================
+    // FUNÇÕES DO CARRINHO
+    // =============================
 
     const addToCart = (produto, quantidade = 1) => {
         setCart(prev => {
-            const existing = prev.find(p => p.id === produto.id);
+            const existing = prev.find(
+                p =>
+                    p.id === produto.id &&
+                    p.tamanhoSelecionado === produto.tamanhoSelecionado &&
+                    p.corSelecionada === produto.corSelecionada
+            );
 
-            let updated;
             if (existing) {
-                updated = prev.map(p =>
-                    p.id === produto.id
+                return prev.map(p =>
+                    p.id === produto.id &&
+                        p.tamanhoSelecionado === produto.tamanhoSelecionado &&
+                        p.corSelecionada === produto.corSelecionada
                         ? { ...p, quantidade: p.quantidade + quantidade }
                         : p
                 );
-            } else {
-                updated = [...prev, { ...produto, quantidade }];
             }
 
-            syncWithBackend(updated);
-            return updated;
+            return [...prev, { ...produto, quantidade }];
         });
     };
 
     const removeFromCart = (id) => {
-        setCart(prev => {
-            const updated = prev.filter(p => p.id !== id);
-            syncWithBackend(updated);
-            return updated;
-        });
+        setCart(prev => prev.filter(p => p.id !== id));
     };
 
     const updateQuantity = (id, quantidade) => {
         if (quantidade < 1) return;
 
-        setCart(prev => {
-            const updated = prev.map(p =>
+        setCart(prev =>
+            prev.map(p =>
                 p.id === id ? { ...p, quantidade } : p
-            );
-            syncWithBackend(updated);
-            return updated;
-        });
+            )
+        );
     };
 
     const clearCart = () => {
         setCart([]);
-        syncWithBackend([]);
     };
+
+    // =============================
+    // TOTAIS
+    // =============================
 
     const total = cart.reduce((acc, item) => {
         const valor = Number(item.valor || 0);
@@ -105,6 +96,29 @@ export function CartProvider({ children }) {
         (acc, item) => acc + item.quantidade,
         0
     );
+
+    // =============================
+    // CONTROLE SIDEBAR
+    // =============================
+
+    const openCart = () => setIsCartOpen(true);
+    const closeCart = () => setIsCartOpen(false);
+    const toggleCart = () => setIsCartOpen(prev => !prev);
+
+    const openProduct = () => setIsOpenProduct(true);
+    const closeProduct = () => setIsOpenProduct(false);
+
+    const openEdit = () => setIsOpenEdit(true);
+    const closeEdit = () => setIsOpenEdit(false);
+
+    const openCatego = () => setIsOpenCatego(true);
+    const closeCatego = () => setIsOpenCatego(false);
+
+    const openEditCatego = () => setIsOpenEditCatego(true);
+    const closeEditCatego = () => setIsOpenEditCatego(false);
+
+    const openCoupon = () => setIsOpenCoupon(true);
+    const closeCoupon = () => setIsOpenCoupon(false);
 
     return (
         <CartContext.Provider
@@ -118,11 +132,34 @@ export function CartProvider({ children }) {
                 updateQuantity,
                 clearCart,
 
-                // 🔥 exportando controle do sidebar
                 isCartOpen,
                 openCart,
                 closeCart,
-                toggleCart
+                toggleCart,
+
+                isOpenProduct,
+                openProduct,
+                closeProduct,
+
+                isOpenEdit,
+                openEdit,
+                closeEdit,
+
+                isOpenCatego,
+                openCatego,
+                closeCatego,
+
+                isOpenEditCatego,
+                setIsOpenEditCatego,
+                openEditCatego,
+                closeEditCatego,
+
+                isOpenCoupon,
+                openCoupon,
+                closeCoupon,
+
+                id,
+                setId
             }}
         >
             {children}

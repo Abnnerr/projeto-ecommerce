@@ -6,12 +6,12 @@ export default function Menu() {
 
   const links = [
     { name: "Início", href: "/" },
-    { name: "Quem Somos", href: "#" },
-    { name: "Produtos", href: "#" },
-    { name: "Projetos Personalizados", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "Rastreie seu Pedido", href: "#" },
-    { name: "Filamentos 3D", href: "#" },
+    { name: "Quem Somos", href: "/about-us" },
+    { name: "Produtos", href: "/products" },
+    { name: "Projetos Personalizados", href: "/projects" },
+    { name: "Blog", href: "/blog" },
+    { name: "Rastreie seu Pedido", href: "/order-tracking" },
+    { name: "Filamentos 3D", href: "/filamentos-3d" },
   ];
 
   return (

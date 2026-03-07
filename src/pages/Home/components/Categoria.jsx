@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { AXIOS } from "../services";
+import { AXIOS } from "../../../services";
 
 const Categoria = () => {
   const [categorias, setCategorias] = useState([]);
@@ -18,7 +18,7 @@ const Categoria = () => {
     async function fetchCategorias() {
       try {
         const res = await AXIOS.get("/api/categories");
-        // pega apenas as primeiras 4 categorias
+
         setCategorias(res.data.slice(0, 4));
       } catch (err) {
         console.error("Erro ao buscar categorias:", err);
@@ -29,8 +29,8 @@ const Categoria = () => {
     fetchCategorias();
   }, []);
 
-  if (loading) {
-    return <div className="py-16 text-center">Carregando categorias...</div>;
+  if (loading  || categorias.length === 0) {
+    return <div className="py-20 text-center font-bold">Carregando categorias...</div>;
   }
 
   return (

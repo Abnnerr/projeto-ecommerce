@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { AXIOS } from "../../services";
+import { AXIOS } from "../../../services";
 import { FaPlus, FaEdit, FaTrash, FaBoxOpen } from "react-icons/fa";
-import { useCart } from "../../contexts/CartProvider";
+import { useCart } from "../../../contexts/CartProvider";
 
 const Products = () => {
   const [products, setProducts] = useState([]);

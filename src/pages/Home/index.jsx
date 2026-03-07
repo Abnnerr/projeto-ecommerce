@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import Categoria from "../components/Categoria";
-import CategoryCarousel from "../components/CategoryCarousel";
-import Depoimentos from "../components/Depoimentos";
-import ShippingSection from "../components/ShippingSection";
-import { AXIOS } from "../services";
-import BannerSection from "../components/BannerSection";
+import Categoria from "./components/Categoria";
+import CategoryCarousel from "./components/CategoryCarousel";
+import Depoimentos from "./components/Depoimentos";
+// import ShippingSection from "../../components/ShippingSection";
+import { AXIOS } from "../../services";
 import { Title } from "react-head";
+import BannerSection from "./components/BannerSection";
 
 const Home = () => {
     const [categories, setCategories] = useState([]);
@@ -31,7 +31,7 @@ const Home = () => {
             <div>
                 <BannerSection />
                 <Categoria />
-                {!loading && categories.length > 0 && (
+                {!loading && categories.length > 0 ? (
                     <div>
                         {categories.slice(0, 2).map((category) => (
                             <CategoryCarousel
@@ -41,7 +41,10 @@ const Home = () => {
                             />
                         ))}
                     </div>
-                )}
+                ) : (
+                    <div className="py-20 text-center font-bold">Carregando produtos...</div>
+                )
+            }
 
                 <Depoimentos />
 

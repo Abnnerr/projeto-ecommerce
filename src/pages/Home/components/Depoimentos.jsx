@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { AXIOS } from "../services";
+import { AXIOS } from "../../../services";
 
 const Depoimentos = () => {
 
@@ -19,7 +19,6 @@ const Depoimentos = () => {
     }
     buscarReview()
   }, [])
-
   return (
     <section className="py-20 ">
 
@@ -39,14 +38,15 @@ const Depoimentos = () => {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div className={`${reviews.length > 0 ? 'grid grid-cols-1 md:grid-cols-3 gap-6 mb-16' : 'py-20 text-center flex items-center justify-center font-bold'} `}>
 
-          {reviews.map((item, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.2 }}
-              className="
+          {
+            reviews.length > 0 ? (reviews.map((item, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2 }}
+                className="
               bg-[#1E1E1E]
               border border-[#2A2A2A]
               rounded-xl
@@ -54,64 +54,57 @@ const Depoimentos = () => {
               flex gap-4
               items-start
               "
-            >
+              >
 
-              {/* Foto */}
+                {/* Foto */}
 
-              {
-                item.usuarios.foto ? (
-                  <img
-                    src={item.usuarios.foto}
-                    alt={item.nome}
-                    className="
+                {
+                  item.usuarios.foto ? (
+                    <img
+                      src={item.usuarios.foto}
+                      alt={item.nome}
+                      className="
                 w-12 h-12
                 rounded-full
                 object-cover
                 border border-[#2A2A2A]
                 "
-                  />
-                ) : (
-                  <div className="px-2.5 py-2 *:font-bold *:text-xl rounded-full bg-gray-600 flex  justify-center gap-1">
-                    <span> {item.usuarios.nome[0].toUpperCase()}</span>
-                    <span> {item.usuarios.nome[1].toUpperCase()}</span>
-                  </div>
-                )
-              }
-              {/* <img
-                src={item.usuarios.foto}
-                alt={item.nome}
-                className="
-                w-12 h-12
-                rounded-full
-                object-cover
-                border border-[#2A2A2A]
-                "
-              /> */}
+                    />
+                  ) : (
+                    <div className="px-2.5 py-2 *:font-bold *:text-xl rounded-full bg-gray-600 flex  justify-center gap-1">
+                      <span> {item.usuarios.nome[0].toUpperCase()}</span>
+                      <span> {item.usuarios.nome[1].toUpperCase()}</span>
+                    </div>
+                  )
+                }
 
-              {/* Conteúdo */}
-              <div>
+                {/* Conteúdo */}
+                <div>
 
-                <p className="
+                  <p className="
                   text-[#B3B3B3]
                   text-sm
                   leading-relaxed
                   mb-2
                 ">
-                  "{item.descricao}"
-                </p>
+                    "{item.descricao}"
+                  </p>
 
-                <span className="
+                  <span className="
                   text-[#EAEAEA]
                   text-xs
                   font-medium
                 ">
-                  {item.usuarios.nome}
-                </span>
+                    {item.usuarios.nome}
+                  </span>
 
-              </div>
+                </div>
 
-            </motion.div>
-          ))}
+              </motion.div>
+            ))) : (
+              <div>Carregando depoimentos...</div>
+            )
+          }
 
         </div>
 

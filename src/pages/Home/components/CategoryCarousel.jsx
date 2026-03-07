@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { AXIOS } from "../services";
+import { AXIOS } from "../../../services";
 import { Link } from "react-router";
 import { FaBoxOpen, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const CategoryCarousel = ({ categoryId, categoryName }) => {
   const [products, setProducts] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
- 
+
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -72,7 +72,6 @@ const CategoryCarousel = ({ categoryId, categoryName }) => {
       </section>
     );
   }
-
   return (
     <section className="py-6 flex justify-center ">
       <div className="max-w-6xl mx-auto px-6 w-full">
@@ -152,11 +151,10 @@ const CategoryCarousel = ({ categoryId, categoryName }) => {
                   <button
                     key={idx}
                     onClick={() => setCurrentIndex(idx)}
-                    className={`h-2 rounded-full transition-all ${
-                      idx === currentIndex
+                    className={`h-2 rounded-full transition-all ${idx === currentIndex
                         ? "bg-[#4FF8D9] w-6"
                         : "bg-[#2A2A2A] w-2"
-                    }`}
+                      }`}
                     aria-label={`Ir para slide ${idx + 1}`}
                   />
                 ))}

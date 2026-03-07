@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useUser } from "../contexts/UsuarioProvider";
+import { useUser } from "../../../contexts/UsuarioProvider";
 import { useNavigate } from "react-router";
-import { Title } from "react-head";
 
-export default function Login() {
+const LoginForm = () => {
 
     const { login } = useUser()
     const navigate = useNavigate()
@@ -15,7 +14,6 @@ export default function Login() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    // const [user, setUser] = useState()
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,7 +27,7 @@ export default function Login() {
             setLoading(true);
             const data = await login(form.email, form.senha)
 
-            if (data.usuario.nivel === 'admin') {
+            if (data?.usuario?.nivel === 'admin') {
                 navigate('/admin')
             } else {
                 navigate('/')
@@ -46,10 +44,8 @@ export default function Login() {
             setLoading(false);
         }
     }
-
     return (
         <div className=" min-h-screen  flex flex-col">
-            <Title>Login - 3Dtech</Title>
             <main className="flex-1 flex items-center justify-center px-4">
                 <div className="w-full max-w-md bg-white rounded-2xl shadow-md p-6 sm:p-8">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
@@ -112,5 +108,7 @@ export default function Login() {
                 </div>
             </main>
         </div>
-    )
+    );
 }
+
+export default LoginForm;

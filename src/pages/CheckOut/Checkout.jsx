@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useCart } from "../contexts/CartProvider";
+import { useCart } from "../../contexts/CartProvider";
 import { FaTruck, FaCreditCard, FaMoneyBillWave } from "react-icons/fa";
 import { useNavigate } from "react-router";
-import { useUser } from "../contexts/UsuarioProvider";
-import { AXIOS } from "../services";
+import { useUser } from "../../contexts/UsuarioProvider";
+import { AXIOS } from "../../services";
 import { Title } from "react-head";
 
 const Checkout = () => {

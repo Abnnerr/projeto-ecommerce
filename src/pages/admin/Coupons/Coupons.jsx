@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaPercent, FaPlus, FaTicketAlt } from "react-icons/fa";
-import { AXIOS } from "../../services";
-import { useCart } from "../../contexts/CartProvider";
+import { AXIOS } from "../../../services";
+import { useCart } from "../../../contexts/CartProvider";
 import { BiTrash, BiTrashAlt } from "react-icons/bi";
 
 const Coupons = () => {

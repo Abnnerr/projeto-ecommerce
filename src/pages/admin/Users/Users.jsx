@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaEnvelope, FaFilter, FaUserPlus, FaUsers } from "react-icons/fa";
-import { AXIOS } from "../../services";
-import { useUser } from "../../contexts/UsuarioProvider";
+import { AXIOS } from "../../../services";
+import { useUser } from "../../../contexts/UsuarioProvider";
 import { BiTrash } from "react-icons/bi";
 
 

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { AXIOS } from "../services";
+import { jwtDecode } from "jwt-decode";
 // import { useNavigate } from "react-router";
 
 
@@ -13,7 +14,7 @@ export function UserProvider({ children }) {
         const savedUser = sessionStorage.getItem("user");
         return savedUser ? JSON.parse(savedUser) : null;
     });
-    const [userBarOpen, setUserBarOpen] = useState()
+    const [userBarOpen, setUserBarOpen] = useState(false)
     const isOpen = () => setUserBarOpen(true)
     const isClose = () => setUserBarOpen(false)
 
@@ -42,11 +43,11 @@ export function UserProvider({ children }) {
     const login = async (email, senha) => {
         try {
             const { data } = await AXIOS.post("/api/auth/login", { email, senha });
-            // console.log(data)
+            console.log(data)
             if (data.usuario && data.token) {
                 setUser(data.usuario);
                 setToken(data.token);
-                sessionStorage.setItem("user", JSON.stringify(data.user));
+                sessionStorage.setItem("user", JSON.stringify(data.usuario));
                 sessionStorage.setItem("token", data.token);
 
             }
@@ -65,7 +66,8 @@ export function UserProvider({ children }) {
 
             let data;
 
-            if (user?.nivel === 'admin') {
+            if (token && jwtDecode(token)?.nivel === "admin") {
+
                 const response = await AXIOS.post("/api/users", {
                     nome,
                     email,
@@ -80,6 +82,7 @@ export function UserProvider({ children }) {
                 data = response.data;
 
             } else {
+
                 const response = await AXIOS.post("/api/users", {
                     nome,
                     email,
@@ -87,10 +90,11 @@ export function UserProvider({ children }) {
                     telefone,
                     genero,
                     data_nasc,
-                    senha,
+                    senha
                 });
 
                 data = response.data;
+
             }
 
             if (data.user && data.token) {

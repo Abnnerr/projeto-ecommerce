@@ -8,6 +8,11 @@ export function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const [opcaofrete, setOpcaoFrete] = useState([])
+    const [dadosLocalizacao, setDadosLocalizacao] = useState({})
+    const [frete, setFrete] = useState(0)
+    const [cupomAplicado, setCupomAplicado] = useState(null);
+
     // 🔥 SIDEBARS
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isOpenProduct, setIsOpenProduct] = useState(false);
@@ -15,6 +20,8 @@ export function CartProvider({ children }) {
     const [isOpenCatego, setIsOpenCatego] = useState(false);
     const [isOpenEditCatego, setIsOpenEditCatego] = useState(false);
     const [isOpenCoupon, setIsOpenCoupon] = useState(false);
+
+    console.log(cart);
 
     // =============================
     // CARREGAR DO LOCALSTORAGE
@@ -56,11 +63,12 @@ export function CartProvider({ children }) {
                     p.id === produto.id &&
                         p.tamanhoSelecionado === produto.tamanhoSelecionado &&
                         p.corSelecionada === produto.corSelecionada
-                        ? { ...p, quantidade: p.quantidade + quantidade }
+                        ? { ...p, quantidade: p.quantidade + quantidade } // aqui
                         : p
                 );
             }
 
+            // Se não existe, adiciona o produto com a quantidade exata
             return [...prev, { ...produto, quantidade }];
         });
     };
@@ -96,6 +104,8 @@ export function CartProvider({ children }) {
         (acc, item) => acc + item.quantidade,
         0
     );
+    console.log(totalItems);
+
 
     // =============================
     // CONTROLE SIDEBAR
@@ -159,7 +169,18 @@ export function CartProvider({ children }) {
                 closeCoupon,
 
                 id,
-                setId
+                setId,
+
+
+                setFrete,
+                frete,
+                opcaofrete,
+                setOpcaoFrete,
+                dadosLocalizacao,
+                setDadosLocalizacao,
+                cupomAplicado,
+                setCupomAplicado
+
             }}
         >
             {children}

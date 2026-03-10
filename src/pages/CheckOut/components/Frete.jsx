@@ -8,7 +8,6 @@ const Frete = () => {
     // const [frete, setFrete] = useState(0);
     // const [fretes, setFretes] = useState([]);
     const [freteSelecionado, setFreteSelecionado] = useState(null);
-
     const [cep, setCep] = useState("");
     const [logradouro, setLogradouro] = useState("");
     const [numero, setNumero] = useState("");
@@ -17,6 +16,9 @@ const Frete = () => {
     const [cidade, setCidade] = useState("");
     const [estado, setEstado] = useState("");
 
+
+    console.log(opcaofrete);
+    
     async function handleCalculateShipping() {
         try {
             if (!cep || cart.length === 0) return;

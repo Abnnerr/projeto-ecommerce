@@ -161,7 +161,7 @@ export default function Header() {
                         {
                             user ? (
                                 <div className="flex items-center justify-center gap-4">
-                                    <a href={`/orders`}>
+                                    <a href={`/usuario/${user.nome}`} className="flex items-center gap-2">
                                         {
                                             user.imagem ? (
                                                 <img src={user.imagem} alt="" />

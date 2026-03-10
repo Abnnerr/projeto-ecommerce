@@ -22,7 +22,8 @@ import PageProducts from "../pages/Products";
 import PageDetailProduct from "../pages/DetailProduct";
 import PageCheckOut from "../pages/CheckOut";
 import Teste from "../pages/Teste";
-import Orders from "../pages/admin/Orders";
+import Orders from "../pages/Orders";
+import Usuario from "../pages/Usuario";
 
 
 const Paths = () => {
@@ -34,8 +35,8 @@ const Paths = () => {
           <Route path="checkout" element={<PageCheckOut />} />
           <Route path="product/:id" element={<PageDetailProduct />} />
           <Route path="products" element={<PageProducts />} />
-          {/* <Route path="usuario/:name" element={<Usuario />} />
-          <Route path="orders" element={<OrdersPage />} /> */}
+          <Route path="usuario/:name" element={<Usuario />} />
+          <Route path="usuario/orders" element={<Orders />} />
         </Route>
 
         <Route path="/" element={<AuthLayout />}>

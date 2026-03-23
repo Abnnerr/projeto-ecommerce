@@ -6,12 +6,12 @@ import { Link } from "react-router";
 
 const PageCategories = () => {
     const { openCatego, openEditCatego, setIdCatego } = useCart()
-    const { token } = JSON.parse(localStorage.getItem("user")) || {};
 
     const [categories, setCategories] = useState([])
     useEffect(() => {
         async function buscarCategorias() {
             try {
+                const token = sessionStorage.getItem("token");
                 const response = await AXIOS.get("/api/categories",
                     {
                         headers: {

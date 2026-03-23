@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AXIOS } from "../../../services";
 import { FaTruck } from "react-icons/fa";
 import { useCart } from "../../../contexts/CartProvider";
@@ -18,38 +18,40 @@ const Frete = () => {
 
 
     console.log(opcaofrete);
-    
+
+
+    useEffect(() => {
+        setDadosLocalizacao({
+            cep,
+            logradouro,
+            numero,
+            complemento,
+            bairro,
+            cidade,
+            estado
+        })
+    }, [cep, logradouro, numero, complemento, bairro, cidade, estado])
     async function handleCalculateShipping() {
         try {
             if (!cep || cart.length === 0) return;
 
             const products = cart.map(item => ({
                 id: String(item.id),
-                width: item.largura,
-                height: item.altura,
-                length: item.comprimento,
-                weight: item.peso,
-                insurance_value: item.valor * item.quantidade,
-                quantity: item.quantidade
+                width: Number(item.largura),
+                height: Number(item.altura),
+                length: Number(item.comprimento),
+                weight: Number(item.peso),
+                insurance_value: Number(item.valor * item.quantidade),
+                quantity: Number(item.quantidade)
             }));
-
-            const response = await AXIOS.post("/api/frete", { cep, products });
+            console.log(products)
+            console.log(cep)
+            const response = await AXIOS.post("/api/orders/fretes", { cep, products });
             const fretesDisponiveis = response.data.filter(f => !f.error);
             console.log("Resposta do servidor:", response.data);
             console.log(fretesDisponiveis);
 
             setOpcaoFrete(fretesDisponiveis);
-            setDadosLocalizacao({
-                cep,
-                logradouro,
-                numero,
-                complemento,
-                bairro,
-                cidade,
-                estado
-            })
-
-
 
             const primeiroValido = response.data.find(f => !f.error);
             if (primeiroValido) {
@@ -165,7 +167,7 @@ const Frete = () => {
                         type="text"
                         placeholder="UF"
                         value={estado}
-                        onChange={(e) => setEstado(e.target.value)}
+                        onChange={(e) => setEstado(e.target.value.toUpperCase())}
                         maxLength="2"
                         className="w-16 p-3 rounded-md border border-gray-300"
                     />

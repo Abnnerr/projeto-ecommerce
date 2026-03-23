@@ -12,7 +12,11 @@ const Coupon = () => {
 
     const handleApplyCoupon = async () => {
 
+        if (!cupom) {
+            return
+        }
         try {
+            
             const response = await AXIOS.get(`/api/coupons/${cupom}`);
             // console.log(response.data);
             setCupomAplicado(response.data)

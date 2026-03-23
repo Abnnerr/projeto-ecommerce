@@ -10,7 +10,7 @@ const Depoimentos = () => {
     async function buscarReview() {
       try {
         const response = await AXIOS.get('/api/reviews')
-        console.log(response);
+        console.log(response.data);
 
         setReviews(response.data)
       } catch (err) {
@@ -38,10 +38,10 @@ const Depoimentos = () => {
         </div>
 
         {/* Cards */}
-        <div className={`${reviews.length > 0 ? 'grid grid-cols-1 md:grid-cols-3 gap-6 mb-16' : 'py-20 text-center flex items-center justify-center font-bold'} `}>
+        <div className={`${reviews?.length > 0 ? 'grid grid-cols-1 md:grid-cols-3 gap-6 mb-16' : 'py-20 text-center flex items-center justify-center font-bold'} `}>
 
           {
-            reviews.length > 0 ? (reviews.map((item, index) => (
+            reviews?.length > 0 ? (reviews.map((item, index) => (
               <motion.div
                 key={index}
                 whileHover={{ y: -4 }}
@@ -102,7 +102,7 @@ const Depoimentos = () => {
 
               </motion.div>
             ))) : (
-              <div>Carregando depoimentos...</div>
+              <div>Nenhum Depoimento</div>
             )
           }
 

@@ -30,7 +30,7 @@ const DetailProduct = () => {
         async function buscarProduto() {
             try {
                 const response = await AXIOS.get(`/api/products/${id}`);
-                const data = response.data;
+                const data = response.data.dados;
                 setProduto(data);
 
                 if (data.tamanhos) {

@@ -12,6 +12,7 @@ export function CartProvider({ children }) {
     const [dadosLocalizacao, setDadosLocalizacao] = useState({})
     const [frete, setFrete] = useState(0)
     const [cupomAplicado, setCupomAplicado] = useState(null);
+    const [cliente, setCliente] = useState({})
 
     // 🔥 SIDEBARS
     const [isCartOpen, setIsCartOpen] = useState(false);
@@ -179,7 +180,9 @@ export function CartProvider({ children }) {
                 dadosLocalizacao,
                 setDadosLocalizacao,
                 cupomAplicado,
-                setCupomAplicado
+                setCupomAplicado,
+                cliente,
+                setCliente
 
             }}
         >

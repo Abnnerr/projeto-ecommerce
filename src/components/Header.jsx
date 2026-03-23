@@ -12,8 +12,8 @@ export default function Header() {
         async function buscarProdutos() {
             try {
                 const response = await AXIOS.get('/api/products')
-                console.log(response.data)
-                setProdutos(response.data)
+                // console.log(response.data)
+                setProdutos(response.data.dados)
             } catch (err) {
                 console.log(err)
             }

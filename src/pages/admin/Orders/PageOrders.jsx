@@ -17,11 +17,17 @@ const PageOrders = () => {
     const fetchOrders = async () => {
         try {
             setLoading(true);
-
-            const response= await AXIOS.get("/api/orders");
+            const token = sessionStorage.getItem("token");
+            const response = await AXIOS.get("/api/orders",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
 
             console.log(response.data);
-            
+
             setOrders(response.data);
         } catch (error) {
             console.error("Erro ao buscar pedidos", error);

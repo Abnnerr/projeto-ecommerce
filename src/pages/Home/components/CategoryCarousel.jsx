@@ -11,7 +11,9 @@ const CategoryCarousel = ({ categoryId, categoryName }) => {
     async function fetchProducts() {
       try {
         const response = await AXIOS.get("/api/products");
-        const filtered = response.data.filter(
+        console.log(response.data.dados);
+        
+        const filtered = response.data.dados.filter(
           (product) => product.categoria_id === categoryId
         );
         setProducts(filtered);

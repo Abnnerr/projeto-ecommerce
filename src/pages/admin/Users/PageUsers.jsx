@@ -14,9 +14,17 @@ const PageUsers = () => {
 
         async function buscarUsuarios() {
             try {
-                const response = await AXIOS.get("/api/users");
+                const token = sessionStorage.getItem("token");
+                const response = await AXIOS.get("/api/users",
+                    {
+
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
                 console.log(response.data)
-                setUsers(response.data);
+                setUsers(response.data.dados);
             } catch (err) {
                 console.log(err);
             }
@@ -97,8 +105,8 @@ const PageUsers = () => {
                                 <tr key={users.id} className="border-b border-white/5 last:border-b-0">
                                     <td className="px-2 py-3 font-medium">{users.nome}</td>
                                     <td className="px-2 py-3 text-[var(--textColor)]">{users.email}</td>
-                                    <td className="px-2 py-3">{users.pedidos.length}</td>
-                                    <td className="px-2 py-3">{users.pedidos.reduce((acc, pedido) => acc + Number(pedido.valor_total), 0)}</td>
+                                    <td className="px-2 py-3">{users.pedidos?.length | 0}</td>
+                                    <td className="px-2 py-3">{users.pedidos?.reduce((acc, pedido) => acc + Number(pedido.valor_total), 0) | 0}</td>
                                     <td className="px-2 py-3">
                                         <span className={`rounded-md px-2 py-1 text-xs ${users.emailVerificado ? "bg-emerald-500/15 text-emerald-300" : "bg-zinc-500/15 text-zinc-300"}`}>
                                             {users.emailVerificado ? 'ativo' : 'inativo'}

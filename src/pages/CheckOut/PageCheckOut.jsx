@@ -6,9 +6,10 @@ import { useUser } from "../../contexts/UsuarioProvider";
 import { AXIOS } from "../../services";
 import Coupon from "./components/Coupon";
 import Frete from "./components/Frete";
+import DadosCliente from "./components/DadosCliente";
 
 const PageCheckOut = () => {
-    const { cart, totalItems, clearCart, frete, dadosLocalizacao, cupomAplicado } = useCart();
+    const { cart, totalItems, clearCart, frete, dadosLocalizacao, cupomAplicado, cliente, } = useCart();
     // console.log(dadosLocalizacao);
 
     const { user } = useUser();
@@ -33,7 +34,8 @@ const PageCheckOut = () => {
 
     useEffect(() => {
         if (!user) navigate('/')
-    }, [user, navigate]);
+        if (cart.length <= 0) navigate('/')
+    }, [user, cart ,navigate]);
 
 
 
@@ -61,34 +63,30 @@ const PageCheckOut = () => {
 
             const previsao = previsaoEntrega.toISOString().split("T")[0];
 
-            const itens = cart.map(item => ({
+            const items = cart.map(item => ({
                 produto_id: item.id,
                 quantidade: item.quantidade
             }));
 
             const pedidoData = {
-                usuario_id: user.id,
-                logradouro: dadosLocalizacao.logradouro,
-                numero: dadosLocalizacao.numero,
-                complemento: dadosLocalizacao.complemento || "",
-                bairro: dadosLocalizacao.bairro,
-                cidade: dadosLocalizacao.cidade,
-                estado: dadosLocalizacao.estado,
-                cep: dadosLocalizacao.cep,
+                nome: cliente.nome,
+                email: cliente.email,
+                tel: cliente.tel,
+                endereco: dadosLocalizacao,
                 previsao_entrega: previsao,
-                cupom_id: cupomAplicado ? cupomAplicado.id : null,
+                cupomId: cupomAplicado ? cupomAplicado.id : null,
                 metodo_pagamento: payment,
-                itens
+                items
             };
 
             console.log(pedidoData);
 
-            const response = await AXIOS.post("/api/orders", pedidoData);
+            const response = await AXIOS.post("/api/orders", { usuario_id: user.id,pedidoData});
 
             const pedido = response.data;
             console.log(pedido);
-            
-            clearCart();
+
+            // clearCart();
 
             // navigate(`/order-tracking?pedido_id=${pedido.id}`);
         } catch (error) {
@@ -107,13 +105,7 @@ const PageCheckOut = () => {
                 <div className="lg:col-span-2 space-y-6">
 
                     {/* DADOS DO CLIENTE */}
-                    <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
-                        <h2 className="text-xl font-bold border-b border-gray-200 pb-2">Dados do Cliente</h2>
-                        <input type="text" placeholder="Nome completo" className="w-full p-3 rounded-md border border-gray-300" />
-                        <input type="email" placeholder="E-mail" className="w-full p-3 rounded-md border border-gray-300" />
-                        <input type="text" placeholder="Telefone" className="w-full p-3 rounded-md border border-gray-300" />
-                    </div>
-
+                    <DadosCliente />
                     {/* ENDEREÇO E FRETE */}
                     <Frete />
                     {/* CUPOM */}

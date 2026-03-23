@@ -14,6 +14,7 @@ export function UserProvider({ children }) {
         const savedUser = sessionStorage.getItem("user");
         return savedUser ? JSON.parse(savedUser) : null;
     });
+
     const [userBarOpen, setUserBarOpen] = useState(false)
     const isOpen = () => setUserBarOpen(true)
     const isClose = () => setUserBarOpen(false)
@@ -44,11 +45,13 @@ export function UserProvider({ children }) {
         try {
             const { data } = await AXIOS.post("/api/auth/login", { email, senha });
             console.log(data)
-            if (data.usuario && data.token) {
-                setUser(data.usuario);
-                setToken(data.token);
-                sessionStorage.setItem("user", JSON.stringify(data.usuario));
-                sessionStorage.setItem("token", data.token);
+            console.log('fora do if')
+            if (data.dados.usuario && data.dados.token) {
+                console.log('entrou no if login')
+                setUser(data.dados.usuario);
+                setToken(data.dados.token);
+                sessionStorage.setItem("user", JSON.stringify(data.dados.usuario));
+                sessionStorage.setItem("token", data.dados.token);
 
             }
 

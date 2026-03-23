@@ -15,9 +15,17 @@ const PageProducts = () => {
     useEffect(() => {
         async function buscarProdutos() {
             try {
-                const response = await AXIOS.get("/api/products");
+                 const token = sessionStorage.getItem("token");
+
+                const response = await AXIOS.get("/api/products", {
+
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                );
                 console.log(response.data)
-                setProducts(response.data);
+                setProducts(response.data.dados);
             } catch (err) {
                 console.error(err);
             }

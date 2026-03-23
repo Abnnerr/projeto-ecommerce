@@ -8,11 +8,18 @@ import { Link } from "react-router";
 const PageCoupon = () => {
     const [coupons, setCoupons] = useState([]);
     const { openCoupon } = useCart()
+   
 
     useEffect(() => {
-        async function buscarCupons() {
+        async function buscarCupons() { 
+            const token = sessionStorage.getItem("token");
             try {
-                const response = await AXIOS.get("/api/coupons");
+                const response = await AXIOS.get("/api/coupons",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
                 setCoupons(response.data);
                 console.log(response.data);
             } catch (err) {

@@ -28,7 +28,7 @@ const LoginForm = () => {
             setLoading(true);
             const data = await login(form.email, form.senha)
 
-            if (jwtDecode(data.token)?.nivel === 'admin') {
+            if (jwtDecode(data.dados.token)?.nivel === 'admin') {
                 navigate('/admin')
             } else {
                 navigate('/')

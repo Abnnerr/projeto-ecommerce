@@ -24,9 +24,9 @@ const PageProducts = () => {
 
                 console.info("Produtos carregados:", productsRes.data);
                 console.info("Categorias carregadas:", categoriesRes.data);
-                setProducts(productsRes.data);
-                setFilteredProducts(productsRes.data);
-                setCategories(categoriesRes.data);
+                setProducts(productsRes.data.dados);
+                setFilteredProducts(productsRes.data.dados);
+                setCategories(categoriesRes.data.dados);
             } catch (err) {
                 console.error(err);
             } finally {

@@ -6,8 +6,10 @@ import { useCart } from "../../../contexts/CartProvider";
 
 const CategoriesEditBar = () => {
 
-    const { isOpenEditCatego, closeEditCatego, idCatego  } = useCart()
+    const { isOpenEditCatego, closeEditCatego, idCatego } = useCart()
 
+    console.log(idCatego);
+    
     const [form, setForm] = useState({
         nome: "",
     });
@@ -26,7 +28,11 @@ const CategoriesEditBar = () => {
 
         try {
             setLoading(true);
-            await AXIOS.put(`/api/categories/${idCatego}`, form);
+            await AXIOS.put(`/api/categories/${idCatego}`, form, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            });
             setSuccess("Categoria criado com sucesso!");
             setForm({
                 nome: "",

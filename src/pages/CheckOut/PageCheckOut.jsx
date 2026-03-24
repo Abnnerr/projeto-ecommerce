@@ -35,7 +35,7 @@ const PageCheckOut = () => {
     useEffect(() => {
         if (!user) navigate('/')
         if (cart.length <= 0) navigate('/')
-    }, [user, cart ,navigate]);
+    }, [user, cart, navigate]);
 
 
 
@@ -63,30 +63,28 @@ const PageCheckOut = () => {
 
             const previsao = previsaoEntrega.toISOString().split("T")[0];
 
-            const items = cart.map(item => ({
-                produto_id: item.id,
-                quantidade: item.quantidade
-            }));
-
             const pedidoData = {
-                nome: cliente.nome,
-                email: cliente.email,
-                tel: cliente.tel,
+                items: cart.map(item => ({
+                    produtoId: item.id,  // certifique-se de que o backend também está usando 'produtoId'
+                    quantidade: item.quantidade
+                })),
                 endereco: dadosLocalizacao,
-                previsao_entrega: previsao,
-                cupomId: cupomAplicado ? cupomAplicado.id : null,
-                metodo_pagamento: payment,
-                items
+                cupomId: cupomAplicado ? cupomAplicado.id : null
             };
 
-            console.log(pedidoData);
-
-            const response = await AXIOS.post("/api/orders", { usuario_id: user.id,pedidoData});
-
+            const response = await AXIOS.post("/api/orders", {
+                usuarioId: user.id,
+                ...pedidoData
+            }, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            });
+            
             const pedido = response.data;
             console.log(pedido);
 
-            // clearCart();
+            clearCart();
 
             // navigate(`/order-tracking?pedido_id=${pedido.id}`);
         } catch (error) {

@@ -8,6 +8,8 @@ export function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const [idCatego, setIdCatego] = useState()
+
     const [opcaofrete, setOpcaoFrete] = useState([])
     const [dadosLocalizacao, setDadosLocalizacao] = useState({})
     const [frete, setFrete] = useState(0)
@@ -172,6 +174,8 @@ export function CartProvider({ children }) {
                 id,
                 setId,
 
+                idCatego, 
+                setIdCatego,
 
                 setFrete,
                 frete,

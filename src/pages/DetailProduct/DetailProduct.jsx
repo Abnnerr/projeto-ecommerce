@@ -51,6 +51,19 @@ const DetailProduct = () => {
 
         buscarProduto();
     }, [id]);
+    useEffect(() => {
+        async function buscarProduto() {
+            try {
+                const response = await AXIOS.get(`/api/orders/${user.id}`);
+                const data = response.data.dados;
+                
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        buscarProduto();
+    }, [id]);
 
     // =========================
     // Cálculo de Preço

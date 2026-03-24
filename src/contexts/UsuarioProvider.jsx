@@ -80,7 +80,13 @@ export function UserProvider({ children }) {
                     data_nasc,
                     senha,
                     nivel: "admin"
-                });
+                },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                        }
+                    }
+                );
 
                 data = response.data;
 

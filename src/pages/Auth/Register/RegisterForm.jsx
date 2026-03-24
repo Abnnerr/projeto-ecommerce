@@ -64,7 +64,7 @@ const RegisterForm = () => {
                 form.cpf.replaceAll('.', '').replaceAll('-', ''),
                 form.phone.replaceAll('(', '').replaceAll(')', '').replaceAll(' ', ''),
                 form.gender,
-                form.birthDate,
+                new Date(form.birthDate),
                 form.senha
             );
 

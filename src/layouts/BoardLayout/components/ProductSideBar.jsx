@@ -27,6 +27,7 @@ const ProductSideBar = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
+    console.log(form)
     useEffect(() => {
         if (!isOpenProduct) return;
         async function fetchCategorias() {
@@ -55,7 +56,22 @@ const ProductSideBar = () => {
 
         try {
             setLoading(true);
-            await AXIOS.post("/api/products", form);
+
+            // converte tamanhos e cores para arrays
+            const payload = {
+                ...form,
+                tamanhos: Array(...(JSON.parse(form.tamanhos || "[]"))),
+                cores: Array(...(JSON.parse(form.cores || "[]"))),
+                estoque: Number(form.estoque),
+                categoria_id: Number(form.categoria_id),
+            };
+
+            await AXIOS.post("/api/products", payload, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+                },
+            });
+
             setSuccess("Produto criado com sucesso!");
             setForm({
                 nome: "",
@@ -77,7 +93,6 @@ const ProductSideBar = () => {
             setLoading(false);
         }
     }
-
     return (
         <>
             {/* Overlay */}

@@ -44,7 +44,14 @@ const PageUsers = () => {
 
     async function deleteUser(id) {
         try {
-            const response = await AXIOS.delete(`/api/users/${id}`)
+            const token = sessionStorage.getItem("token");
+            const response = await AXIOS.delete(`/api/users/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
             console.log(response.data);
 
 

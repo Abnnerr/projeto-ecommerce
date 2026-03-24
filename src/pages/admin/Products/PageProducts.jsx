@@ -90,6 +90,7 @@ const PageProducts = () => {
                         <thead className="text-[var(--textColor)]">
                             <tr className="border-b border-white/10">
                                 <th className="px-2 py-2 font-medium">Produto</th>
+                                <th className="px-2 py-2 font-medium">Nome</th>
                                 <th className="px-2 py-2 font-medium">Categoria</th>
                                 <th className="px-2 py-2 font-medium">Estoque</th>
                                 <th className="px-2 py-2 font-medium">Preço</th>
@@ -101,6 +102,7 @@ const PageProducts = () => {
                             {products.map((product) => (
                                 <tr key={product.id} className="border-b border-white/5 last:border-b-0">
                                     <td className="px-2 py-3 font-medium">{product.id}</td>
+                                    <td className="px-2 py-3 font-medium">{product.nome}</td>
                                     <td className="px-2 py-3 font-medium">{product.categoria.nome}</td>
                                     <td className="px-2 py-3 text-[var(--textColor)]">{product.estoque || "-"}</td>
                                     <td className="px-2 py-3">{formatPrice(product.valor, product.desconto)}</td>

@@ -50,8 +50,19 @@ const ProductPutBar = () => {
 
         try {
             setLoading(true);
-            await AXIOS.put(`/api/products/${id}`, form);
-            setSuccess("Produto criado com sucesso!");
+
+            // transforma tamanhos e cores em arrays antes de enviar
+            const payload = {
+                ...form,
+                tamanhos: Array(...(JSON.parse(form.tamanhos || "[]"))),
+                cores: Array(...(JSON.parse(form.cores || "[]"))),
+                estoque: Number(form.estoque),
+                categoria_id: Number(form.categoria_id),
+            };
+
+            await AXIOS.put(`/api/products/${id}`, payload);
+
+            setSuccess("Produto atualizado com sucesso!");
             setForm({
                 nome: "",
                 valor: "",
@@ -67,12 +78,11 @@ const ProductPutBar = () => {
                 peso: "",
             });
         } catch (err) {
-            setError(err.response?.data?.message || "Erro ao Editar produto");
+            setError(err.response?.data?.message || "Erro ao editar produto");
         } finally {
             setLoading(false);
         }
     }
-
     return (
         <>
             {/* Overlay */}

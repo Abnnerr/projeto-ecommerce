@@ -2,11 +2,13 @@ import { FaTimes } from "react-icons/fa";
 import { AXIOS } from "../../../services";
 import { useState } from "react";
 import { useCart } from "../../../contexts/CartProvider";
+import { useUser } from "../../../contexts/UsuarioProvider";
 
 
 const CategoriesBar = () => {
 
     const { isOpenCatego, closeCatego  } = useCart()
+    const { user } = useUser()
 
     const [form, setForm] = useState({
         nome: "",
@@ -15,6 +17,8 @@ const CategoriesBar = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
+    console.log(user);
+    
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
@@ -26,7 +30,11 @@ const CategoriesBar = () => {
 
         try {
             setLoading(true);
-            await AXIOS.post(`/api/categories`, form);
+            await AXIOS.post(`/api/categories`, {...form, usuario: user }, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
+                }
+            });
             setSuccess("Categoria criado com sucesso!");
             setForm({
                 nome: "",

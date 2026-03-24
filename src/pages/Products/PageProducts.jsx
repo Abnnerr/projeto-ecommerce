@@ -26,7 +26,7 @@ const PageProducts = () => {
                 console.info("Categorias carregadas:", categoriesRes.data);
                 setProducts(productsRes.data.dados);
                 setFilteredProducts(productsRes.data.dados);
-                setCategories(categoriesRes.data.dados);
+                setCategories(categoriesRes.data);
             } catch (err) {
                 console.error(err);
             } finally {
@@ -116,7 +116,7 @@ const PageProducts = () => {
                             className="bg-white border border-gray-300 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:border-blue-400 transition-colors"
                         >
                             <option value="">Todas as categorias</option>
-                            {categories.map(cat => (
+                            {categories?.map(cat => (
                                 <option key={cat.id} value={cat.id}>{cat.nome}</option>
                             ))}
                         </select>
@@ -148,7 +148,7 @@ const PageProducts = () => {
 
                 {/* Produtos */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 h-screen">
-                    {filteredProducts.map(product => {
+                    {filteredProducts?.map(product => {
                         const imageSrc = getProductImage(product);
                         return (
                             <div key={product.id} className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg hover:border-blue-400 overflow-hidden transition-all duration-300 group flex flex-col h-90">

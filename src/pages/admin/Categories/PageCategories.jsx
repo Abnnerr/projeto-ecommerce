@@ -8,6 +8,7 @@ const PageCategories = () => {
     const { openCatego, openEditCatego, setIdCatego } = useCart()
 
     const [categories, setCategories] = useState([])
+    
     useEffect(() => {
         async function buscarCategorias() {
             try {
